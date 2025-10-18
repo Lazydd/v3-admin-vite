@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type { FormRules } from "element-plus"
+// import type { FormRules } from "element-plus"
 import type { LoginRequestData } from "./apis/type"
 import ThemeSwitch from "@@/components/ThemeSwitch/index.vue"
-import { Key, Loading, Lock, Picture, User } from "@element-plus/icons-vue"
+import { LockOutlined, UserOutlined } from "@ant-design/icons-vue"
+import { message } from "ant-design-vue"
 import { useSettingsStore } from "@/pinia/stores/settings"
 import { useUserStore } from "@/pinia/stores/user"
 import { getCaptchaApi, loginApi } from "./apis"
@@ -36,7 +37,7 @@ const loginFormData: LoginRequestData = reactive({
 })
 
 /** 登录表单校验规则 */
-const loginFormRules: FormRules = {
+const loginFormRules = {
   username: [
     { required: true, message: "请输入用户名", trigger: "blur" }
   ],
@@ -50,23 +51,20 @@ const loginFormRules: FormRules = {
 }
 
 /** 登录 */
-function handleLogin() {
-  loginFormRef.value?.validate((valid) => {
-    if (!valid) {
-      ElMessage.error("表单校验不通过")
-      return
-    }
-    loading.value = true
-    loginApi(loginFormData).then(({ data }) => {
-      userStore.setToken(data.token)
-      router.push(route.query.redirect ? decodeURIComponent(route.query.redirect as string) : "/")
-    }).catch(() => {
-      createCode()
-      loginFormData.password = ""
-    }).finally(() => {
-      loading.value = false
-    })
+function onFinish(values: any) {
+  loading.value = true
+  loginApi(values).then(({ data }) => {
+    userStore.setToken(data.token)
+    router.push(route.query.redirect ? decodeURIComponent(route.query.redirect as string) : "/")
+  }).catch(() => {
+    createCode()
+    loginFormData.password = ""
+  }).finally(() => {
+    loading.value = false
   })
+}
+function onFinishFailed() {
+  message.error("表单校验不通过")
 }
 
 /** 创建验证码 */
@@ -94,31 +92,28 @@ createCode()
         <img src="@@/assets/images/layouts/logo-text-2.png">
       </div>
       <div class="content">
-        <el-form ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @keyup.enter="handleLogin">
-          <el-form-item prop="username">
-            <el-input
-              v-model.trim="loginFormData.username"
-              placeholder="用户名"
-              type="text"
-              tabindex="1"
-              :prefix-icon="User"
-              size="large"
-            />
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              v-model.trim="loginFormData.password"
-              placeholder="密码"
-              type="password"
-              tabindex="2"
-              :prefix-icon="Lock"
-              size="large"
-              show-password
-              @blur="handleBlur"
-              @focus="handleFocus"
-            />
-          </el-form-item>
-          <el-form-item prop="code">
+        <a-form
+          ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @finish="onFinish"
+          @finish-failed="onFinishFailed"
+        >
+          <a-form-item name="username">
+            <a-input v-model:value="loginFormData.username" placeholder="用户名" tabindex="1" size="large">
+              <template #prefix>
+                <UserOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+          <a-form-item name="password">
+            <a-input-password
+              v-model:value="loginFormData.password" placeholder="密码" type="password" tabindex="2"
+              size="large" show-password @blur="handleBlur" @focus="handleFocus"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <!-- <el-form-item prop="code">
             <el-input
               v-model.trim="loginFormData.code"
               placeholder="验证码"
@@ -145,11 +140,16 @@ createCode()
                 </el-image>
               </template>
             </el-input>
-          </el-form-item>
-          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">
+          </el-form-item> -->
+          <!-- <a-button block :loading="loading" type="primary" size="large" @click.prevent="handleLogin">
             登 录
-          </el-button>
-        </el-form>
+          </a-button> -->
+          <a-form-item>
+            <a-button block :loading="loading" type="primary" html-type="submit" size="large">
+              登 录
+            </a-button>
+          </a-form-item>
+        </a-form>
       </div>
     </div>
   </div>
@@ -163,12 +163,14 @@ createCode()
   align-items: center;
   width: 100%;
   min-height: 100%;
+
   .theme-switch {
     position: fixed;
     top: 5%;
     right: 5%;
     cursor: pointer;
   }
+
   .login-card {
     width: 480px;
     max-width: 90%;
@@ -176,20 +178,25 @@ createCode()
     box-shadow: 0 0 10px #dcdfe6;
     background-color: var(--el-bg-color);
     overflow: hidden;
+
     .title {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 150px;
+
       img {
         height: 100%;
       }
     }
+
     .content {
       padding: 20px 50px 50px 50px;
+
       :deep(.el-input-group__append) {
         padding: 0;
         overflow: hidden;
+
         .el-image {
           width: 100px;
           height: 40px;
@@ -199,6 +206,7 @@ createCode()
           text-align: center;
         }
       }
+
       .el-button {
         width: 100%;
         margin-top: 10px;

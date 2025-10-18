@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import { useGreyAndColorWeakness } from "@@/composables/useGreyAndColorWeakness"
-import { usePany } from "@@/composables/usePany"
+// import { usePany } from "@@/composables/usePany"
 import { useTheme } from "@@/composables/useTheme"
-import zhCn from "element-plus/es/locale/lang/zh-cn" // Element Plus 中文包
+// import zhCn from "element-plus/es/locale/lang/zh-cn" // Element Plus 中文包
+import zhCn from "ant-design-vue/es/locale/zh_CN" // Element Plus 中文包
 
 const { initTheme } = useTheme()
 
 const { initGreyAndColorWeakness } = useGreyAndColorWeakness()
 
-const { initStarNotification, initStoreNotification, initMobileNotification } = usePany()
+// const { initStarNotification, initStoreNotification, initMobileNotification } = usePany()
 
 // 初始化主题
 initTheme()
@@ -17,16 +18,16 @@ initTheme()
 initGreyAndColorWeakness()
 
 // #region 初始化通知
-initStarNotification()
+// initStarNotification()
 
-initStoreNotification()
+// initStoreNotification()
 
-initMobileNotification()
+// initMobileNotification()
 // #endregion
 </script>
 
 <template>
-  <el-config-provider :locale="zhCn">
+  <a-config-provider :locale="zhCn">
     <router-view />
-  </el-config-provider>
+  </a-config-provider>
 </template>

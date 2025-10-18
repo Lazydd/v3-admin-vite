@@ -23,9 +23,9 @@ const settingsStore = useSettingsStore()
       <Footer v-if="settingsStore.showFooter" />
     </div>
     <!-- 返回顶部 -->
-    <el-backtop />
+    <!-- <el-backtop /> -->
     <!-- 返回顶部（固定 Header 情况下） -->
-    <el-backtop target=".app-scrollbar" />
+    <!-- <el-backtop target=".app-scrollbar" /> -->
   </section>
 </template>
 
@@ -43,6 +43,7 @@ const settingsStore = useSettingsStore()
   @extend %scrollbar;
   display: flex;
   flex-direction: column;
+
   .app-container-grow {
     flex-grow: 1;
   }

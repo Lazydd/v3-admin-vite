@@ -2,7 +2,7 @@
 import type { RouterLink } from "vue-router"
 import Screenfull from "@@/components/Screenfull/index.vue"
 import { useRouteListener } from "@@/composables/useRouteListener"
-import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue"
+import { LeftOutlined, RightOutlined } from "@ant-design/icons-vue"
 import { useSettingsStore } from "@/pinia/stores/settings"
 
 interface Props {
@@ -105,21 +105,23 @@ listenerRouteChange(() => {
 
 <template>
   <div class="scroll-container">
-    <el-tooltip content="向左滚动标签（超出最大宽度可点击）">
-      <el-icon class="arrow left" @click="scrollTo('left')">
-        <ArrowLeft />
-      </el-icon>
-    </el-tooltip>
+    <a-tooltip>
+      <template #title>
+        <span>向左滚动标签（超出最大宽度可点击）</span>
+      </template>
+      <LeftOutlined class="arrow left" @click="scrollTo('left')" />
+    </a-tooltip>
     <el-scrollbar ref="scrollbarRef" @wheel.passive="wheelScroll" @scroll="scroll">
       <div ref="scrollbarContentRef" class="scrollbar-content">
         <slot />
       </div>
     </el-scrollbar>
-    <el-tooltip content="向右滚动标签（超出最大宽度可点击）">
-      <el-icon class="arrow right" @click="scrollTo('right')">
-        <ArrowRight />
-      </el-icon>
-    </el-tooltip>
+    <a-tooltip>
+      <template #title>
+        <span>向右滚动标签（超出最大宽度可点击）</span>
+      </template>
+      <RightOutlined class="arrow right" @click="scrollTo('right')" />
+    </a-tooltip>
     <Screenfull v-if="settingsStore.showScreenfull" :content="true" class="screenfull" />
   </div>
 </template>
@@ -130,26 +132,35 @@ listenerRouteChange(() => {
   user-select: none;
   display: flex;
   justify-content: space-between;
+
   .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 100%;
     font-size: 18px;
     cursor: pointer;
+
     &.left {
       box-shadow: 5px 0 5px -6px var(--el-border-color-darker);
     }
+
     &.right {
       box-shadow: -5px 0 5px -6px var(--el-border-color-darker);
     }
   }
+
   .el-scrollbar {
     flex: 1;
     // 防止换行（超出宽度时，显示滚动条）
     white-space: nowrap;
+
     .scrollbar-content {
       display: inline-block;
     }
   }
+
   .screenfull {
     width: 40px;
     display: flex;

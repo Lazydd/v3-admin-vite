@@ -79,31 +79,37 @@ function handleContentFullClick() {
 <template>
   <div>
     <!-- 全屏 -->
-    <el-tooltip v-if="!content" effect="dark" :content="fullscreenTips" placement="bottom">
-      <SvgIcon :name="fullscreenSvgName" @click="handleFullscreenClick" class="svg-icon" />
-    </el-tooltip>
-    <!-- 内容区 -->
-    <el-dropdown v-else :disabled="isFullscreen">
-      <SvgIcon :name="contentLargeSvgName" class="svg-icon" />
-      <template #dropdown>
-        <el-dropdown-menu>
-          <!-- 内容区放大 -->
-          <el-dropdown-item @click="handleContentLargeClick">
-            {{ contentLargeTips }}
-          </el-dropdown-item>
-          <!-- 内容区全屏 -->
-          <el-dropdown-item @click="handleContentFullClick">
-            内容区全屏
-          </el-dropdown-item>
-        </el-dropdown-menu>
+    <a-tooltip v-if="!content">
+      <template #title>
+        {{ fullscreenTips }}
       </template>
-    </el-dropdown>
+      <SvgIcon :name="fullscreenSvgName" @click="handleFullscreenClick" class="svg-icon" />
+    </a-tooltip>
+    <!-- 内容区 -->
+    <a-dropdown v-else :disabled="isFullscreen">
+      <SvgIcon :name="contentLargeSvgName" class="svg-icon" />
+      <template #overlay>
+        <a-menu>
+          <a-menu-item key="0">
+            <div @click="handleContentLargeClick">
+              {{ contentLargeTips }}
+            </div>
+          </a-menu-item>
+          <a-menu-item key="1">
+            <div @click="handleContentFullClick">
+              内容区全屏
+            </div>
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .svg-icon {
   font-size: 20px;
+
   &:focus {
     outline: none;
   }

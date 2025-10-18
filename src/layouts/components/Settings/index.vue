@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useLayoutMode } from "@@/composables/useLayoutMode"
 import { removeLayoutsConfig } from "@@/utils/cache/local-storage"
-import { Refresh } from "@element-plus/icons-vue"
+import { UndoOutlined } from "@ant-design/icons-vue"
 import { useSettingsStore } from "@/pinia/stores/settings"
 import SelectLayoutMode from "./SelectLayoutMode.vue"
 
@@ -57,15 +57,18 @@ function resetLayoutsConfig() {
   <div class="setting-container">
     <h4>布局配置</h4>
     <SelectLayoutMode />
-    <el-divider />
+    <a-divider />
     <h4>功能配置</h4>
     <div v-for="(settingValue, settingName, index) in switchSettings" :key="index" class="setting-item">
       <span class="setting-name">{{ settingName }}</span>
-      <el-switch v-model="settingValue.value" :disabled="!isLeft && settingName === '固定 Header'" />
+      <a-switch v-model:checked="settingValue.value" :disabled="!isLeft && settingName === '固定 Header'" />
     </div>
-    <el-button type="danger" :icon="Refresh" @click="resetLayoutsConfig">
+    <a-button block danger type="primary" @click="resetLayoutsConfig">
       重 置
-    </el-button>
+      <template #icon>
+        <UndoOutlined />
+      </template>
+    </a-button>
   </div>
 </template>
 
@@ -74,6 +77,7 @@ function resetLayoutsConfig() {
 
 .setting-container {
   padding: 20px;
+
   .setting-item {
     font-size: 14px;
     color: var(--el-text-color-regular);
@@ -81,11 +85,13 @@ function resetLayoutsConfig() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .setting-name {
       @extend %ellipsis;
     }
   }
-  .el-button {
+
+  .ant-button {
     margin-top: 40px;
     width: 100%;
   }

@@ -2,6 +2,7 @@
 
 :root {
   /* Body */
+  --color-primary: #1677ff;
   --v3-body-text-color: var(--el-text-color-primary);
   --v3-body-bg-color: var(--el-bg-color-page);
   /* Header 区域 = NavigationBar 组件 + TagsView 组件 */
@@ -17,10 +18,10 @@
   --v3-navigationbar-text-color: var(--el-text-color-regular);
   /* Sidebar 组件（左侧模式全部生效、顶部模式全部不生效、混合模式非颜色部分生效） */
   --v3-sidebar-width: 220px;
-  --v3-sidebar-hide-width: 58px;
+  --v3-sidebar-hide-width: 80px;
   --v3-sidebar-border-right: 1px solid var(--el-fill-color);
   --v3-sidebar-menu-item-height: 60px;
-  --v3-sidebar-menu-tip-line-bg-color: var(--el-color-primary);
+  --v3-sidebar-menu-tip-line-bg-color: var(--color-primary);
   --v3-sidebar-menu-bg-color: #001428;
   --v3-sidebar-menu-hover-bg-color: #409eff10;
   --v3-sidebar-menu-text-color: #cfd3dc;
@@ -30,10 +31,10 @@
   --v3-tagsview-text-color: var(--el-text-color-regular);
   --v3-tagsview-tag-active-text-color: #ffffff;
   --v3-tagsview-tag-bg-color: var(--el-bg-color);
-  --v3-tagsview-tag-active-bg-color: var(--el-color-primary);
+  --v3-tagsview-tag-active-bg-color: var(--color-primary);
   --v3-tagsview-tag-border-radius: 2px;
   --v3-tagsview-tag-border-color: var(--el-border-color-lighter);
-  --v3-tagsview-tag-active-border-color: var(--el-color-primary);
+  --v3-tagsview-tag-active-border-color: var(--color-primary);
   --v3-tagsview-tag-icon-hover-bg-color: #00000030;
   --v3-tagsview-tag-icon-hover-color: #ffffff;
   --v3-tagsview-contextmenu-text-color: var(--el-text-color-regular);

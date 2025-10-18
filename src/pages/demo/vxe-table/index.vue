@@ -1,451 +1,174 @@
 <script lang="ts" setup>
-import type { TableResponseData } from "@@/apis/tables/type"
-import type { ElMessageBoxOptions } from "element-plus"
-import type { VxeFormInstance, VxeFormProps, VxeGridInstance, VxeGridProps, VxeModalInstance, VxeModalProps } from "vxe-table"
-import { deleteTableDataApi, getTableDataApi } from "@@/apis/tables"
+import { getTableDataApi } from "@@/apis/tables"
+import { usePagination } from "@@/composables/usePagination"
+import { DeleteOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons-vue"
+import { message } from "ant-design-vue"
+import { h, useTemplateRef } from "vue"
+import { VxeColumn, VxeTable } from "vxe-table"
 
 defineOptions({
-  // 命名当前组件
   name: "VxeTable"
 })
 
-// #region vxe-grid
-interface RowMeta {
-  id: number
-  username: string
-  roles: string
-  phone: string
-  email: string
-  status: boolean
-  createTime: string
-  /** vxe-table 自动添加上去的属性 */
-  _VXE_ID?: string
+const formRef = useTemplateRef("formRef")
+const tableRef = useTemplateRef("tableRef")
+
+const { paginationData, handleCurrentChange } = usePagination()
+const searchForm = reactive({
+  username: "",
+  phone: "",
+  date: undefined
+})
+const tableData = ref([])
+const loading = ref(false)
+function getData() {
+  loading.value = true
+  getTableDataApi({
+    currentPage: paginationData.currentPage,
+    size: paginationData.pageSize,
+    username: searchForm.username,
+    phone: searchForm.phone
+  }).then((res) => {
+    tableData.value = res.data.list as any
+    paginationData.total = res.data.total
+  }).finally(() => {
+    loading.value = false
+  })
 }
 
-const xGridDom = useTemplateRef<VxeGridInstance>("xGridDom")
+function search() {
+  if (paginationData.currentPage === 1) {
+    getData()
+    return
+  }
+  handleCurrentChange(1)
+}
+function resetSearch() {
+  searchForm.username = ""
+  searchForm.phone = ""
+  searchForm.date = undefined
+  search()
+}
 
-const xGridOpt: VxeGridProps = reactive({
-  loading: true,
-  autoResize: true,
-  /** 分页配置项 */
-  pagerConfig: {
-    align: "right"
-  },
-  /** 表单配置项 */
-  formConfig: {
-    items: [
-      {
-        field: "username",
-        itemRender: {
-          name: "VxeInput",
-          props: {
-            placeholder: "用户名",
-            clearable: true
-          }
-        }
-      },
-      {
-        field: "phone",
-        itemRender: {
-          name: "VxeInput",
-          props: {
-            placeholder: "手机号",
-            clearable: true
-          }
-        }
-      },
-      {
-        itemRender: {
-          name: "VxeButtonGroup",
-          options: [
-            {
-              type: "submit",
-              content: "查询",
-              status: "primary",
-              icon: "vxe-icon-search"
-            },
-            {
-              type: "reset",
-              content: "重置",
-              icon: "vxe-icon-refresh"
-            }
-          ]
-        }
-      }
-    ]
-  },
-  /** 工具栏配置 */
-  toolbarConfig: {
-    refresh: true,
-    custom: true,
-    slots: {
-      buttons: "toolbar-btns"
-    }
-  },
-  /** 自定义列配置项 */
-  customConfig: {
-    /** 是否允许列选中  */
-    checkMethod: ({ column }) => !["username"].includes(column.field)
-  },
-  /** 列配置 */
-  columns: [
-    {
-      type: "checkbox",
-      width: "50px"
-    },
-    {
-      field: "username",
-      title: "用户名"
-    },
-    {
-      field: "roles",
-      title: "角色",
-      slots: {
-        default: "role-column"
-      }
-    },
-    {
-      field: "phone",
-      title: "手机号"
-    },
-    {
-      field: "email",
-      title: "邮箱"
-    },
-    {
-      field: "status",
-      title: "状态",
-      slots: {
-        default: "status-column"
-      }
-    },
-    {
-      field: "createTime",
-      title: "创建时间"
-    },
-    {
-      title: "操作",
-      width: "150px",
-      fixed: "right",
-      showOverflow: false,
-      slots: {
-        default: "row-operate"
-      }
-    }
+function onShowModal(row: any) {
+  open.value = true
+  formState.value = JSON.parse(JSON.stringify(row))
+}
+
+function onDelete(row: any) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(row)
+      message.success("删除成功")
+      resolve(true)
+    }, 3000)
+  })
+}
+function deleteAll() {
+  // const list = tableRef.value?.getCheckboxRecords()
+  // const list2 = tableRef.value?.getCheckboxReserveRecords()
+  // tableRef.value?.clearCheckboxRow()
+}
+
+const formState = ref({
+  username: "",
+  password: "",
+  remember: true
+})
+
+const rules = {
+  username: [
+    { required: true, message: "请输入用户名", trigger: "blur" }
   ],
-  /** 数据代理配置项（基于 Promise API） */
-  proxyConfig: {
-    /** 启用动态序号代理 */
-    seq: true,
-    /** 是否代理表单 */
-    form: true,
-    /** 是否自动加载，默认为 true */
-    autoLoad: true,
-    props: {
-      total: "total"
-    },
-    ajax: {
-      query: ({ page, form }) => {
-        xGridOpt.loading = true
-        crudStore.clearTable()
-        return new Promise((resolve) => {
-          let total = 0
-          let result: RowMeta[] = []
-          // 加载数据
-          const callback = (res: TableResponseData) => {
-            if (res?.data) {
-              // 总数
-              total = res.data.total
-              // 列表数据
-              result = res.data.list
-            }
-            xGridOpt.loading = false
-            // 返回值有格式要求，详情见 vxe-table 官方文档
-            resolve({ total, result })
-          }
-          // 接口需要的参数
-          const params = {
-            username: form.username || "",
-            phone: form.phone || "",
-            size: page.pageSize,
-            currentPage: page.currentPage
-          }
-          // 调用接口
-          getTableDataApi(params).then(callback).catch(callback)
-        })
-      }
-    }
-  }
-})
-// #endregion
-
-// #region vxe-modal
-const xModalDom = useTemplateRef<VxeModalInstance>("xModalDom")
-
-const xModalOpt: VxeModalProps = reactive({
-  title: "",
-  showClose: true,
-  escClosable: true,
-  maskClosable: true,
-  beforeHideMethod: () => {
-    xFormDom.value?.clearValidate()
-    return Promise.resolve()
-  }
-})
-// #endregion
-
-// #region vxe-form
-const xFormDom = useTemplateRef<VxeFormInstance>("xFormDom")
-
-const xFormOpt: VxeFormProps = reactive({
-  span: 24,
-  titleWidth: "100px",
-  loading: false,
-  /** 是否显示标题冒号 */
-  titleColon: false,
-  /** 表单数据 */
-  data: {
-    username: "",
-    password: ""
-  },
-  /** 项列表 */
-  items: [
-    {
-      field: "username",
-      title: "用户名",
-      itemRender: {
-        name: "$input",
-        props: {
-          placeholder: "请输入"
-        }
-      }
-    },
-    {
-      field: "password",
-      title: "密码",
-      itemRender: {
-        name: "$input",
-        props: {
-          placeholder: "请输入"
-        }
-      }
-    },
-    {
-      align: "right",
-      itemRender: {
-        name: "$buttons",
-        children: [
-          {
-            props: {
-              content: "取消"
-            },
-            events: {
-              click: () => xModalDom.value?.close()
-            }
-          },
-          {
-            props: {
-              type: "submit",
-              content: "确定",
-              status: "primary"
-            },
-            events: {
-              click: () => crudStore.onSubmitForm()
-            }
-          }
-        ]
-      }
-    }
+  password: [
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
   ],
-  /** 校验规则 */
-  rules: {
-    username: [
-      {
-        required: true,
-        validator: ({ itemValue }) => {
-          switch (true) {
-            case !itemValue:
-              return new Error("请输入")
-            case !itemValue.trim():
-              return new Error("空格无效")
-          }
-        }
-      }
-    ],
-    password: [
-      {
-        required: true,
-        validator: ({ itemValue }) => {
-          switch (true) {
-            case !itemValue:
-              return new Error("请输入")
-            case !itemValue.trim():
-              return new Error("空格无效")
-          }
-        }
-      }
-    ]
-  }
-})
-// #endregion
+  code: [
+    { required: true, message: "请输入验证码", trigger: "blur" }
+  ]
+}
 
-// #region 增删改查
-const crudStore = reactive({
-  /** 表单类型，true 表示修改，false 表示新增 */
-  isUpdate: true,
-  /** 加载表格数据 */
-  commitQuery: () => xGridDom.value?.commitProxy("query"),
-  /** 清空表格数据 */
-  clearTable: () => xGridDom.value?.reloadData([]),
-  /** 点击显示弹窗 */
-  onShowModal: (row?: RowMeta) => {
-    if (row) {
-      crudStore.isUpdate = true
-      xModalOpt.title = "修改用户"
-      // 赋值
-      xFormOpt.data.username = row.username
-    } else {
-      crudStore.isUpdate = false
-      xModalOpt.title = "新增用户"
-    }
-    // 禁用表单项
-    const props = xFormOpt.items?.[0]?.itemRender?.props
-    props && (props.disabled = crudStore.isUpdate)
-    xModalDom.value?.open()
-    nextTick(() => {
-      !crudStore.isUpdate && xFormDom.value?.reset()
-      xFormDom.value?.clearValidate()
-    })
-  },
-  /** 确定并保存 */
-  onSubmitForm: () => {
-    if (xFormOpt.loading) return
-    xFormDom.value?.validate((errMap) => {
-      if (errMap) return
-      xFormOpt.loading = true
-      const callback = () => {
-        xFormOpt.loading = false
-        xModalDom.value?.close()
-        ElMessage.success("操作成功")
-        !crudStore.isUpdate && crudStore.afterInsert()
-        crudStore.commitQuery()
-      }
-      if (crudStore.isUpdate) {
-        // 模拟调用修改接口成功
-        setTimeout(() => callback(), 1000)
-      } else {
-        // 模拟调用新增接口成功
-        setTimeout(() => callback(), 1000)
-      }
-    })
-  },
-  /** 新增后是否跳入最后一页 */
-  afterInsert: () => {
-    const pager = xGridDom.value?.getProxyInfo()?.pager
-    if (pager) {
-      const currentTotal = pager.currentPage * pager.pageSize
-      if (currentTotal === pager.total) {
-        ++pager.currentPage
-      }
-    }
-  },
-  /** 删除 */
-  onDelete: (row: RowMeta) => {
-    const tip = `确定 <strong style="color: var(--el-color-danger);"> 删除 </strong> 用户 <strong style="color: var(--el-color-primary);"> ${row.username} </strong> ？`
-    const config: ElMessageBoxOptions = {
-      type: "warning",
-      showClose: true,
-      closeOnClickModal: true,
-      closeOnPressEscape: true,
-      cancelButtonText: "取消",
-      confirmButtonText: "确定",
-      dangerouslyUseHTMLString: true
-    }
-    ElMessageBox.confirm(tip, "提示", config).then(() => {
-      deleteTableDataApi(row.id).then(() => {
-        ElMessage.success("删除成功")
-        crudStore.afterDelete()
-        crudStore.commitQuery()
-      })
-    })
-  },
-  /** 删除后是否返回上一页 */
-  afterDelete: () => {
-    const tableData: RowMeta[] = xGridDom.value!.getData()
-    const pager = xGridDom.value?.getProxyInfo()?.pager
-    if (pager && pager.currentPage > 1 && tableData.length === 1) {
-      --pager.currentPage
-    }
-  },
-  /** 更多自定义方法 */
-  moreFn: () => {}
-})
-// #endregion
+const open = ref(false)
+const confirmLoading = ref(false)
+function handleOk() {
+  formRef.value.validate().then(() => {
+    confirmLoading.value = true
+  })
+}
+
+function cancel() {
+  confirmLoading.value = false
+  formRef.value.resetFields()
+}
+watch([() => paginationData.currentPage, () => paginationData.pageSize], getData, { immediate: true })
 </script>
 
 <template>
   <div class="app-container">
-    <el-alert
-      title="数据来源"
-      type="success"
-      description="由 Apifox 提供在线 Mock，数据不具备真实性，仅供简单的 CRUD 操作演示"
-      show-icon
-    />
-    <el-alert
-      title="注意"
-      type="warning"
-      description="当前示例对应的 Vxe Table 版本最高兼容到 4.6.25"
-      show-icon
-    />
-    <!-- 表格 -->
-    <vxe-grid ref="xGridDom" v-bind="xGridOpt">
-      <!-- 左侧按钮列表 -->
-      <template #toolbar-btns>
-        <vxe-button status="primary" icon="vxe-icon-add" @click="crudStore.onShowModal()">
-          新增用户
-        </vxe-button>
-        <vxe-button status="danger" icon="vxe-icon-delete">
+    <div class="header">
+      <div class="left">
+        <a-button type="primary" :icon="h(PlusOutlined)" @click="open = true">
+          新增
+        </a-button>
+        <a-button type="primary" :icon="h(DeleteOutlined)" danger @click="deleteAll">
           批量删除
-        </vxe-button>
+        </a-button>
+      </div>
+      <div class="right">
+        <a-input v-model:value.trim="searchForm.username" placeholder="请输入用户名" style="width: 200px;" />
+        <a-input v-model:value.trim="searchForm.phone" placeholder="请输入手机号" style="width: 200px;" />
+        <a-select v-model:value="searchForm.date" placeholder="请输入手机号" :options="[{ value: 10000 }]"
+          style="width: 200px;" />
+        <a-button type="primary" @click="search">
+          查询
+        </a-button>
+        <a-button :icon="h(RedoOutlined)" @click="resetSearch" title="重置" />
+      </div>
+    </div>
+    <VxeTable ref="tableRef" :data="tableData" align="center"
+      :row-config="{ keyField: 'id', isCurrent: true, isHover: true }" :checkbox-config="{ reserve: true }"
+      :loading="loading">
+      <VxeColumn type="checkbox" width="70" />
+      <VxeColumn field="id" title="id" />
+      <VxeColumn field="username" title="Name" />
+      <VxeColumn field="phone" title="Sex" />
+      <VxeColumn field="email" title="Age">
+        <template #default="{ row }">
+          <a-button type="link" @click="onShowModal(row)">
+            编辑
+          </a-button>
+          <a-popconfirm title="确认删除?" ok-text="确认" cancel-text="取消" placement="topRight" @confirm="onDelete(row)">
+            <a-button type="link" danger>
+              删除
+            </a-button>
+          </a-popconfirm>
+        </template>
+      </VxeColumn>
+    </VxeTable>
+    <div class="pagination">
+      <a-pagination v-model:current="paginationData.currentPage" v-model:page-size="paginationData.pageSize"
+        :total="paginationData.total" show-size-changer :page-size-options="['20', '50', '100', '200']"
+        :show-total="(total: number) => `共 ${total} 条`" show-quick-jumper @change="handleCurrentChange" />
+    </div>
+    <a-modal v-model:open="open" centered :confirm-loading="confirmLoading" @ok="handleOk" @cancel="cancel">
+      <a-form :model="formState" ref="formRef" :label-col="{ span: 6 }" :wrapper-col="{ span: 16 }" autocomplete="off"
+        :rules="rules">
+        <a-form-item label="Username" name="username">
+          <a-input v-model:value="formState.username" placeholder="请选择日期" />
+        </a-form-item>
+        <a-form-item label="Password" name="password">
+          <a-input-password v-model:value="formState.password" placeholder="请选择日期" />
+        </a-form-item>
+        <a-form-item label="date" name="date">
+          <a-date-picker v-model:value="searchForm.date" placeholder="请选择日期" style="width: 100%;" />
+        </a-form-item>
+      </a-form>
+      <template #title>
+        <div>Draggable Modal</div>
       </template>
-      <!-- 角色列 -->
-      <template #role-column="{ row, column }">
-        <el-tag
-          :type="row[column.field] === 'admin' ? 'primary' : 'warning'"
-          effect="plain"
-        >
-          {{ row[column.field] }}
-        </el-tag>
-      </template>
-      <!-- 状态列 -->
-      <template #status-column="{ row, column }">
-        <el-tag
-          :type="row[column.field] ? 'success' : 'danger'"
-          effect="plain"
-        >
-          {{ row[column.field] ? "启用" : "禁用" }}
-        </el-tag>
-      </template>
-      <!-- 操作 -->
-      <template #row-operate="{ row }">
-        <el-button link type="primary" @click="crudStore.onShowModal(row)">
-          修改
-        </el-button>
-        <el-button link type="danger" @click="crudStore.onDelete(row)">
-          删除
-        </el-button>
-      </template>
-    </vxe-grid>
-    <!-- 弹窗 -->
-    <vxe-modal ref="xModalDom" v-bind="xModalOpt">
-      <!-- 表单 -->
-      <vxe-form ref="xFormDom" v-bind="xFormOpt" />
-    </vxe-modal>
+    </a-modal>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.el-alert {
-  margin-bottom: 20px;
-}
-</style>
+<style lang="scss" scoped></style>

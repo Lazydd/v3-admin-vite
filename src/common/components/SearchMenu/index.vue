@@ -12,9 +12,12 @@ function handleOpen() {
 
 <template>
   <div>
-    <el-tooltip effect="dark" content="搜索菜单" placement="bottom">
+    <a-tooltip>
+      <template #title>
+        搜索菜单
+      </template>
       <SvgIcon name="search" @click="handleOpen" class="svg-icon" />
-    </el-tooltip>
+    </a-tooltip>
     <Modal v-model="visible" />
   </div>
 </template>
@@ -22,6 +25,7 @@ function handleOpen() {
 <style lang="scss" scoped>
 .svg-icon {
   font-size: 20px;
+
   &:focus {
     outline: none;
   }

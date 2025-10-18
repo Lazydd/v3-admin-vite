@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Expand, Fold } from "@element-plus/icons-vue"
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue"
 
 interface Props {
   isActive?: boolean
@@ -17,11 +17,9 @@ function toggleClick() {
 </script>
 
 <template>
-  <div @click="toggleClick">
-    <el-icon :size="20" class="icon">
-      <Fold v-if="isActive" />
-      <Expand v-else />
-    </el-icon>
+  <div class="icon" @click="toggleClick">
+    <MenuFoldOutlined v-if="isActive" />
+    <MenuUnfoldOutlined v-else />
   </div>
 </template>
 
@@ -29,5 +27,6 @@ function toggleClick() {
 .icon {
   vertical-align: middle;
   color: var(--v3-hamburger-text-color);
+  font-size: 20px;
 }
 </style>

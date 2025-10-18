@@ -122,12 +122,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
 
 <template>
   <div class="app-container">
-    <el-alert
-      title="数据来源"
-      type="success"
-      description="由 Apifox 提供在线 Mock，数据不具备真实性，仅供简单的 CRUD 操作演示"
-      show-icon
-    />
+    <el-alert title="数据来源" type="success" description="由 Apifox 提供在线 Mock，数据不具备真实性，仅供简单的 CRUD 操作演示" show-icon />
     <el-card v-loading="loading" shadow="never" class="search-wrapper">
       <el-form ref="searchFormRef" :inline="true" :model="searchData">
         <el-form-item prop="username" label="用户名">
@@ -149,20 +144,26 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">
+          <a-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">
             新增用户
-          </el-button>
-          <el-button type="danger" :icon="Delete">
+          </a-button>
+          <a-button type="danger" :icon="Delete">
             批量删除
-          </el-button>
+          </a-button>
         </div>
         <div>
-          <el-tooltip content="下载">
+          <a-tooltip>
+            <template #title>
+              <span>下载</span>
+            </template>
             <el-button type="primary" :icon="Download" circle />
-          </el-tooltip>
-          <el-tooltip content="刷新当前页">
+          </a-tooltip>
+          <a-tooltip>
+            <template #title>
+              <span>刷新当前页</span>
+            </template>
             <el-button type="primary" :icon="RefreshRight" circle @click="getTableData" />
-          </el-tooltip>
+          </a-tooltip>
         </div>
       </div>
       <div class="table-wrapper">
@@ -206,22 +207,15 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
       </div>
       <div class="pager-wrapper">
         <el-pagination
-          background
-          :layout="paginationData.layout"
-          :page-sizes="paginationData.pageSizes"
-          :total="paginationData.total"
-          :page-size="paginationData.pageSize"
-          :current-page="paginationData.currentPage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          background :layout="paginationData.layout" :page-sizes="paginationData.pageSizes"
+          :total="paginationData.total" :page-size="paginationData.pageSize" :current-page="paginationData.currentPage"
+          @size-change="handleSizeChange" @current-change="handleCurrentChange"
         />
       </div>
     </el-card>
     <!-- 新增/修改 -->
     <el-dialog
-      v-model="dialogVisible"
-      :title="formData.id === undefined ? '新增用户' : '修改用户'"
-      width="30%"
+      v-model="dialogVisible" :title="formData.id === undefined ? '新增用户' : '修改用户'" width="30%"
       @closed="resetForm"
     >
       <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px" label-position="left">
@@ -251,6 +245,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
 
 .search-wrapper {
   margin-bottom: 20px;
+
   :deep(.el-card__body) {
     padding-bottom: 2px;
   }

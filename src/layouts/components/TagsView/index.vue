@@ -2,7 +2,7 @@
 import type { RouteLocationNormalizedGeneric, RouteRecordRaw, RouterLink } from "vue-router"
 import type { TagView } from "@/pinia/stores/tags-view"
 import { useRouteListener } from "@@/composables/useRouteListener"
-import { Close } from "@element-plus/icons-vue"
+import { CloseCircleOutlined } from "@ant-design/icons-vue"
 import path from "path-browserify"
 import { usePermissionStore } from "@/pinia/stores/permission"
 import { useTagsViewStore } from "@/pinia/stores/tags-view"
@@ -170,19 +170,15 @@ listenerRouteChange((route) => {
   <div class="tags-view-container">
     <ScrollPane class="tags-view-wrapper" :tag-refs="tagRefs">
       <router-link
-        v-for="tag in tagsViewStore.visitedViews"
-        :key="tag.path"
-        ref="tagRefs"
-        :class="{ active: isActive(tag) }"
-        class="tags-view-item"
-        :to="{ path: tag.path, query: tag.query }"
-        @click.middle="!isAffix(tag) && closeSelectedTag(tag)"
-        @contextmenu.prevent="openMenu(tag, $event)"
+        v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
+        :class="{ active: isActive(tag) }" class="tags-view-item" :to="{ path: tag.path, query: tag.query }"
+        @click.middle="!isAffix(tag) && closeSelectedTag(tag)" @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ tag.meta?.title }}
-        <el-icon v-if="!isAffix(tag)" :size="12" @click.prevent.stop="closeSelectedTag(tag)">
-          <Close />
-        </el-icon>
+        <CloseCircleOutlined
+          class="close-icon" v-if="!isAffix(tag)" :size="12"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </ScrollPane>
     <ul v-show="visible" class="contextmenu" :style="{ left: `${left}px`, top: `${top}px` }">
@@ -208,6 +204,7 @@ listenerRouteChange((route) => {
   width: 100%;
   color: var(--v3-tagsview-text-color);
   overflow: hidden;
+
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-flex;
@@ -224,21 +221,28 @@ listenerRouteChange((route) => {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+
       &:first-of-type {
         margin-left: 5px;
       }
+
       &:last-of-type {
         margin-right: 5px;
       }
+
       &.active {
         background-color: var(--v3-tagsview-tag-active-bg-color);
         color: var(--v3-tagsview-tag-active-text-color);
         border-color: var(--v3-tagsview-tag-active-border-color);
       }
-      .el-icon {
+
+      > span {
         margin-left: 5px;
         margin-right: 1px;
         border-radius: 50%;
+        width: unset !important;
+        height: unset !important;
+
         &:hover {
           background-color: var(--v3-tagsview-tag-icon-hover-bg-color);
           color: var(--v3-tagsview-tag-icon-hover-color);
@@ -246,6 +250,7 @@ listenerRouteChange((route) => {
       }
     }
   }
+
   .contextmenu {
     margin: 0;
     z-index: 3000;
@@ -257,10 +262,12 @@ listenerRouteChange((route) => {
     color: var(--v3-tagsview-contextmenu-text-color);
     background-color: var(--v3-tagsview-contextmenu-bg-color);
     box-shadow: var(--v3-tagsview-contextmenu-box-shadow);
+
     li {
       margin: 0;
       padding: 7px 16px;
       cursor: pointer;
+
       &:hover {
         color: var(--v3-tagsview-contextmenu-hover-text-color);
         background-color: var(--v3-tagsview-contextmenu-hover-bg-color);

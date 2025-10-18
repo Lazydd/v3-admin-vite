@@ -3,8 +3,9 @@
 // Transition
 @import "./transition.scss";
 // Element Plus
-@import "./element-plus.css";
-@import "./element-plus.scss";
+// @import "./element-plus.css";
+// @import "./element-plus.scss";
+@import "./ant-design-vue.scss";
 // Vxe Table
 @import "./vxe-table.css";
 @import "./vxe-table.scss";
@@ -64,4 +65,26 @@ a:hover {
 
 div:focus {
   outline: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--vxe-toolbar-background-color);
+
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+  background-color: var(--vxe-pager-background-color);
 }

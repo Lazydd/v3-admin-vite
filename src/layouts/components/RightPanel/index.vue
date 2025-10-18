@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-import { Setting } from "@element-plus/icons-vue"
+import { SettingOutlined } from "@ant-design/icons-vue"
 
 const show = ref(false)
 </script>
 
 <template>
   <div class="handle-button" @click="show = true">
-    <el-icon :size="24">
-      <Setting />
-    </el-icon>
+    <SettingOutlined />
   </div>
-  <el-drawer v-model="show" size="300px" :with-header="false">
+  <a-drawer v-model:open="show" size="300px">
     <slot />
-  </el-drawer>
+  </a-drawer>
 </template>
 
 <style lang="scss" scoped>
@@ -31,5 +29,9 @@ const show = ref(false)
   display: flex;
   align-items: center;
   justify-content: center;
+
+  > span {
+    font-size: 24px;
+  }
 }
 </style>
