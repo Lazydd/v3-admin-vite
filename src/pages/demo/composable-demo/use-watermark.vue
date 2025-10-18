@@ -10,39 +10,35 @@ const { setWatermark: setGlobalWatermark, clearWatermark: clearGlobalWatermark }
 
 <template>
   <div class="app-container">
-    <el-alert
-      title="示例说明"
-      type="primary"
-      description="通过调用 composable 开启或关闭水印，支持局部、全局、自定义样式（颜色、透明度、字体大小、字体、倾斜角度等），并自带防御（防删、防隐藏）和自适应功能"
-      show-icon
-    />
-    <el-card header="示例" shadow="never">
+    <a-alert message="示例说明"
+      description="通过调用 composable 开启或关闭水印，支持局部、全局、自定义样式（颜色、透明度、字体大小、字体、倾斜角度等），并自带防御（防删、防隐藏）和自适应功能" show-icon />
+    <a-card title="示例" shadow="never">
       <div ref="localRef" class="local" />
-      <template #footer>
-        <el-button-group>
-          <el-button type="primary" @click="setWatermark('局部水印', { color: '#409eff' })">
+      <template #actions>
+        <a-button-group>
+          <a-button type="primary" @click="setWatermark('局部水印', { color: '#409eff' })">
             创建局部水印
-          </el-button>
-          <el-button type="warning" @click="setWatermark('没有防御功能的局部水印', { color: '#e6a23c', defense: false })">
+          </a-button>
+          <a-button @click="setWatermark('没有防御功能的局部水印', { color: '#e6a23c', defense: false })">
             创建无防御局部水印
-          </el-button>
-          <el-button type="danger" @click="clearWatermark">
+          </a-button>
+          <a-button type="primary" danger @click="clearWatermark">
             清除局部水印
-          </el-button>
-        </el-button-group>
-        <el-button-group>
-          <el-button type="primary" @click="setGlobalWatermark('全局水印', { color: '#409eff' })">
+          </a-button>
+        </a-button-group>
+        <a-button-group>
+          <a-button type="primary" @click="setGlobalWatermark('全局水印', { color: '#409eff' })">
             创建全局水印
-          </el-button>
-          <el-button type="warning" @click="setGlobalWatermark('没有防御功能的全局水印', { color: '#e6a23c', defense: false })">
+          </a-button>
+          <a-button @click="setGlobalWatermark('没有防御功能的全局水印', { color: '#e6a23c', defense: false })">
             创建无防御全局水印
-          </el-button>
-          <el-button type="danger" @click="clearGlobalWatermark">
+          </a-button>
+          <a-button type="primary" danger @click="clearGlobalWatermark">
             清除全局水印
-          </el-button>
-        </el-button-group>
+          </a-button>
+        </a-button-group>
       </template>
-    </el-card>
+    </a-card>
   </div>
 </template>
 

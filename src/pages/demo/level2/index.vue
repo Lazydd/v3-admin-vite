@@ -4,17 +4,18 @@
       <span>
         三级及其以上路由缓存功能默认关闭，需要请前往此配置文件中打开：
       </span>
-      <el-link
+      <!-- <a-link
         type="primary"
         href="https://github.com/un-pany/v3-admin-vite/blob/main/src/router/config.ts"
         target="_blank"
       >
         src/router/config.ts
-      </el-link>
+      </a-link> -->
     </h4>
-    <el-card header="二级路由">
+    二级路由
+    <a-card>
       <router-view />
-    </el-card>
+    </a-card>
   </div>
 </template>
 

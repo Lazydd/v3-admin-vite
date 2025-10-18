@@ -1,18 +1,11 @@
-type OptionValue = string | number
-
+import type { SelectProps } from 'ant-design-vue'
 /** Select 需要的数据格式 */
-interface SelectOption {
-  value: OptionValue
-  label: string
-  disabled?: boolean
-}
 
 /** 接口响应格式 */
-type ApiData = ApiResponseData<SelectOption[]>
 
 /** 入参格式，暂时只需要传递 api 函数即可 */
 interface FetchSelectProps {
-  api: () => Promise<ApiData>
+  api: () => Promise<any>
 }
 
 /** 下拉选择器 Composable */
@@ -21,9 +14,9 @@ export function useFetchSelect(props: FetchSelectProps) {
 
   const loading = ref<boolean>(false)
 
-  const options = ref<SelectOption[]>([])
+  const options = ref<SelectProps['options']>([])
 
-  const value = ref<OptionValue>("")
+  const value = ref(undefined)
 
   // 调用接口获取数据
   const loadData = () => {

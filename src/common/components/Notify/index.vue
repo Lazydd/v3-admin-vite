@@ -3,6 +3,8 @@ import type { NotifyItem } from "./type"
 import { Bell } from "@element-plus/icons-vue"
 import { messageData, notifyData, todoData } from "./data"
 import List from "./List.vue"
+import { BellOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
 
 type TabName = "通知" | "消息" | "待办"
 
@@ -47,41 +49,40 @@ const data = ref<DataItem[]>([
 ])
 
 function handleHistory() {
-  ElMessage.success(`跳转到${activeName.value}历史页面`)
+  message.success(`跳转到${activeName.value}历史页面`)
 }
 </script>
 
 <template>
   <div class="notify">
-    <el-popover placement="bottom" :width="popoverWidth" trigger="click">
-      <template #reference>
-        <el-badge :value="badgeValue" :max="badgeMax" :hidden="badgeValue === 0">
-          <el-tooltip effect="dark" content="消息通知" placement="bottom">
-            <el-icon :size="20">
-              <Bell />
-            </el-icon>
-          </el-tooltip>
-        </el-badge>
-      </template>
-      <template #default>
-        <el-tabs v-model="activeName" class="demo-tabs" stretch>
-          <el-tab-pane v-for="(item, index) in data" :key="index" :name="item.name">
-            <template #label>
+    <a-popover placement="bottom" :width="popoverWidth" trigger="click" overlayClassName="notify-width">
+      <a-badge :count="badgeValue" :overflowCount="badgeMax">
+        <a-tooltip effect="dark" content="消息通知" placement="bottom">
+          <template #title>
+            消息通知
+          </template>
+          <BellOutlined />
+        </a-tooltip>
+      </a-badge>
+      <template #content>
+        <a-tabs v-model="activeName" class="demo-tabs" stretch>
+          <a-tab-pane v-for="(item, index) in data" :key="index" :tab="item.name">
+            <template #tab>
               {{ item.name }}
-              <el-badge :value="item.list.length" :max="badgeMax" :type="item.type" />
+              <a-badge :count="item.list.length" :overflowCount="badgeMax" />
             </template>
-            <el-scrollbar height="400px">
+            <div style="height: 400px; overflow-y: auto;">
               <List :data="item.list" />
-            </el-scrollbar>
-          </el-tab-pane>
-        </el-tabs>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
         <div class="notify-history">
-          <el-button link @click="handleHistory">
+          <a-button link @click="handleHistory">
             查看{{ activeName }}历史
-          </el-button>
+          </a-button>
         </div>
       </template>
-    </el-popover>
+    </a-popover>
   </div>
 </template>
 
@@ -90,5 +91,16 @@ function handleHistory() {
   text-align: center;
   padding-top: 12px;
   border-top: 1px solid var(--el-border-color);
+
+
+}
+
+.ant-badge {
+  font-size: 20px;
+}
+</style>
+<style>
+.notify-width {
+  width: 400px;
 }
 </style>

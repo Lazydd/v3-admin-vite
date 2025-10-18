@@ -37,15 +37,6 @@ export const constantRoutes: RouteRecordRaw[] = [
         },
         children: [
           {
-            path: "element-plus",
-            component: () => import("@/pages/demo/element-plus/index.vue"),
-            name: "ElementPlus",
-            meta: {
-              title: "Element Plus",
-              keepAlive: true
-            }
-          },
-          {
             path: "vxe-table",
             component: () => import("@/pages/demo/vxe-table/index.vue"),
             name: "VxeTable",
@@ -89,14 +80,6 @@ export const constantRoutes: RouteRecordRaw[] = [
                 name: "UseFetchSelect",
                 meta: {
                   title: "useFetchSelect"
-                }
-              },
-              {
-                path: "use-fullscreen-loading",
-                component: () => import("@/pages/demo/composable-demo/use-fullscreen-loading.vue"),
-                name: "UseFullscreenLoading",
-                meta: {
-                  title: "useFullscreenLoading"
                 }
               },
               {

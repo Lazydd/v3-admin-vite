@@ -8,8 +8,6 @@ const text = ref("")
 
 <template>
   <div class="app-container">
-    <el-card header="三级路由">
-      <el-input v-model="text" placeholder="输入任意字符测试缓存" />
-    </el-card>
+    三级路由
   </div>
 </template>
