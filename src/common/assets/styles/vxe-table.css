@@ -44,16 +44,18 @@
   --vxe-table-popup-border-color: var(--el-border-color);
 
   /* table */
-  --vxe-table-header-font-color: var(--el-text-color-regular);
-  --vxe-table-footer-font-color: var(--el-text-color-regular);
-  --vxe-table-border-color: var(--el-border-color-lighter);
-  --vxe-table-header-background-color: var(--el-bg-color);
-  --vxe-table-body-background-color: var(--el-bg-color);
-  --vxe-table-footer-background-color: var(--el-bg-color);
+  --vxe-ui-table-header-font-color: var(--el-text-color-regular);
+  --vxe-ui-table-footer-font-color: var(--el-text-color-regular);
+  --vxe-ui-table-border-color: var(--el-border-color-lighter);
+  --vxe-ui-table-header-background-color: var(--el-bg-color);
+  --vxe-ui-table-header-background-color: var(--el-bg-color);
+  --vxe-ui-table-body-background-color: var(--el-bg-color);
+  --vxe-ui-table-footer-background-color: var(--el-bg-color);
 
-  --vxe-table-row-hover-background-color: var(--el-fill-color-light);
-  --vxe-table-row-current-background-color: var(--el-fill-color-light);
-  --vxe-table-row-hover-current-background-color: var(--el-fill-color-light);
+  --vxe-ui-table-row-hover-background-color: var(--el-fill-color-light);
+  --vxe-ui-table-row-striped-background-color: var(--el-fill-color-light);
+  --vxe-ui-table-row-hover-current-background-color: var(--el-fill-color-light);
+  --vxe-ui-table-row-current-background-color: var(--el-fill-color-light);
 
   --vxe-table-checkbox-range-background-color: var(--el-fill-color-light);
 
@@ -94,4 +96,6 @@
   /* select */
   --vxe-select-option-hover-background-color: var(--el-bg-color-overlay);
   --vxe-select-panel-background-color: var(--el-bg-color);
+
+  --vxe-ui-font-primary-color: #1677ff;
 }
