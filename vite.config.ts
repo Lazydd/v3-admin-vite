@@ -127,7 +127,7 @@ export default defineConfig(({ mode }) => {
         dtsDir: resolve(__dirname, "types/auto")
       }),
       // 原子化 CSS
-      UnoCSS(),
+      // UnoCSS(),
       // 自动按需导入 API
       AutoImport({
         imports: ["vue", "vue-router", "pinia"],
