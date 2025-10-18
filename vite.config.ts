@@ -2,10 +2,10 @@
 
 import { resolve } from "node:path"
 import vue from "@vitejs/plugin-vue"
-import UnoCSS from "unocss/vite"
+
 import AutoImport from "unplugin-auto-import/vite"
 import SvgComponent from "unplugin-svg-component/vite"
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+import { ElementPlusResolver, AntDesignVueResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
 import { defineConfig, loadEnv } from "vite"
 import { VueMcp } from "vite-plugin-vue-mcp"
@@ -83,13 +83,13 @@ export default defineConfig(({ mode }) => {
       mode === "development"
         ? undefined
         : {
-            // 打包构建时移除 console.log
-            pure: ["console.log"],
-            // 打包构建时移除 debugger
-            drop: ["debugger"],
-            // 打包构建时移除所有注释
-            legalComments: "none"
-          },
+          // 打包构建时移除 console.log
+          pure: ["console.log"],
+          // 打包构建时移除 debugger
+          drop: ["debugger"],
+          // 打包构建时移除所有注释
+          legalComments: "none"
+        },
     // 依赖预构建
     optimizeDeps: {
       include: ["element-plus/es/components/*/style/css"]
@@ -126,8 +126,6 @@ export default defineConfig(({ mode }) => {
         dts: true,
         dtsDir: resolve(__dirname, "types/auto")
       }),
-      // 原子化 CSS
-      // UnoCSS(),
       // 自动按需导入 API
       AutoImport({
         imports: ["vue", "vue-router", "pinia"],
@@ -137,7 +135,7 @@ export default defineConfig(({ mode }) => {
       // 自动按需导入组件
       Components({
         dts: "types/auto/components.d.ts",
-        resolvers: [ElementPlusResolver()]
+        resolvers: [ElementPlusResolver(), AntDesignVueResolver({ importStyle: false })]
       }),
       // 为项目开启 MCP Server
       VueMcp()
