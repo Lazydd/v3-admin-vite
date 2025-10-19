@@ -43,5 +43,8 @@ const { setWatermark: setGlobalWatermark, clearWatermark: clearGlobalWatermark }
 </template>
 
 <style lang="scss" scoped>
-
+.local {
+  height: 35vh;
+  border: 2px dashed var(--color-primary);
+}
 </style>
