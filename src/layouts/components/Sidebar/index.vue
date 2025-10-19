@@ -73,8 +73,9 @@ const handleClick: MenuProps["onClick"] = (e) => {
 <template>
   <div :class="{ 'has-logo': isLogo }">
     <Logo v-if="isLogo" :collapse="isCollapse" />
-    <a-menu v-model:selectedKeys="selectedKeys" :inline-collapsed="isCollapse && !isTop" theme="dark"
-      :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes" @click="handleClick" />
+    <a-menu v-model:selectedKeys="selectedKeys" :inline-collapsed="isCollapse && !isTop"
+      :theme="isLeft ? 'dark' : 'light'" :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes"
+      @click="handleClick" />
   </div>
 </template>
 
