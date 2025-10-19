@@ -63,11 +63,17 @@ function route2menu(arr: any[]) {
     return newItem
   })
 }
-const selectedKeys = ref<any[]>([activeMenu])
+const selectedKeys = ref<any[]>([])
 
 const handleClick: MenuProps["onClick"] = (e) => {
   router.push({ name: String(e.key) })
 }
+
+watch(() => route.path, () => {
+  selectedKeys.value = route.name ? [route.name] : []
+}, {
+  immediate: true
+})
 </script>
 
 <template>
