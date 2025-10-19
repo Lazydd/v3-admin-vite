@@ -17,8 +17,10 @@ const { themeList, activeThemeName, setTheme } = useTheme()
     </div>
     <template #overlay>
       <a-menu>
-        <a-menu-item v-for="(theme, index) in themeList" :key="index" :disabled="activeThemeName === theme.name"
-          @click="(e: MouseEvent) => setTheme(e, theme.name)">
+        <a-menu-item
+          v-for="(theme, index) in themeList" :key="index" :disabled="activeThemeName === theme.name"
+          @click="(e: MouseEvent) => setTheme(e, theme.name)"
+        >
           <span>{{ theme.title }}</span>
         </a-menu-item>
       </a-menu>

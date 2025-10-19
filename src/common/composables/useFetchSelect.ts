@@ -1,4 +1,4 @@
-import type { SelectProps } from 'ant-design-vue'
+import type { SelectProps } from "ant-design-vue"
 /** Select 需要的数据格式 */
 
 /** 接口响应格式 */
@@ -14,7 +14,7 @@ export function useFetchSelect(props: FetchSelectProps) {
 
   const loading = ref<boolean>(false)
 
-  const options = ref<SelectProps['options']>([])
+  const options = ref<SelectProps["options"]>([])
 
   const value = ref(undefined)
 

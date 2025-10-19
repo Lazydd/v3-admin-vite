@@ -2,8 +2,6 @@
 defineOptions({
   name: "Level3"
 })
-
-const text = ref("")
 </script>
 
 <template>

@@ -229,4 +229,4 @@ New attempts, welcome to follow
 
 ## License
 
-[MIT](./LICENSE) License © 2022-PRESENT [pany](https://github.com/pany-ang)
+[MIT]

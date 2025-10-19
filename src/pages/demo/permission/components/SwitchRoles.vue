@@ -20,10 +20,12 @@ watch(switchRoles, (value) => {
     </div>
     <div class="switch-roles">
       <span>切换用户：</span>
-      <a-radio-group v-model:value="switchRoles" :options="[
-        { label: 'editor', value: 'editor' },
-        { label: 'admin', value: 'admin' },
-      ]" option-type="button" button-style="solid" />
+      <a-radio-group
+        v-model:value="switchRoles" :options="[
+          { label: 'editor', value: 'editor' },
+          { label: 'admin', value: 'admin' },
+        ]" option-type="button" button-style="solid"
+      />
     </div>
   </a-card>
 </template>

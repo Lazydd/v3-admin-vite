@@ -2,11 +2,11 @@
 import type { RouteRecordNameGeneric, RouteRecordRaw } from "vue-router"
 import { useDevice } from "@@/composables/useDevice"
 import { isExternal } from "@@/utils/validate"
+import { message } from "ant-design-vue"
 import { cloneDeep, debounce } from "lodash-es"
 import { usePermissionStore } from "@/pinia/stores/permission"
 import Footer from "./Footer.vue"
 import Result from "./Result.vue"
-import { message } from "ant-design-vue"
 
 /** 控制 modal 显隐 */
 const modelValue = defineModel<boolean>({ required: true })
@@ -144,15 +144,18 @@ function handleEnter() {
 function handleReleaseUpOrDown() {
   isPressUpOrDown.value = false
 }
-
 </script>
 
 <template>
-  <a-modal v-model:open="modelValue" :width="modalWidth" top="5vh" class="search-modal__private" append-to-body
+  <a-modal
+    v-model:open="modelValue" :width="modalWidth" top="5vh" class="search-modal__private" append-to-body
     @cancel="handleClose" @keydown.up="handleUp" @keydown.down="handleDown" @keydown.enter="handleEnter"
-    @keyup.up.down="handleReleaseUpOrDown">
-    <a-input ref="inputRef" v-model:value="keyword" placeholder="搜索菜单" size="large" clearable @input="handleSearch"
-      style="width: calc(100% - 24px);">
+    @keyup.up.down="handleReleaseUpOrDown"
+  >
+    <a-input
+      ref="inputRef" v-model:value="keyword" placeholder="搜索菜单" size="large" clearable @input="handleSearch"
+      style="width: calc(100% - 24px);"
+    >
       <template #prefix>
         <SvgIcon name="search" class="svg-icon" />
       </template>
@@ -161,8 +164,10 @@ function handleReleaseUpOrDown() {
     <template v-else>
       <p>搜索结果</p>
       <div ref="scrollbarRef" style="height: 400px; overflow-y: auto;">
-        <Result ref="resultRef" v-model="activeRouteName" :data="result" :is-press-up-or-down="isPressUpOrDown"
-          @click="handleEnter" />
+        <Result
+          ref="resultRef" v-model="activeRouteName" :data="result" :is-press-up-or-down="isPressUpOrDown"
+          @click="handleEnter"
+        />
       </div>
     </template>
     <template #footer>

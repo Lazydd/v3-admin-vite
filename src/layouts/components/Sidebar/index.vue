@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { h, ref } from "vue"
 import type { MenuProps } from "ant-design-vue"
 import { useDevice } from "@@/composables/useDevice"
 import { useLayoutMode } from "@@/composables/useLayoutMode"
+import { h, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useAppStore } from "@/pinia/stores/app"
 import { usePermissionStore } from "@/pinia/stores/permission"
@@ -27,7 +27,7 @@ const permissionStore = usePermissionStore()
 
 const settingsStore = useSettingsStore()
 
-const activeMenu = computed(() => route.meta.activeMenu || route.path)
+// const activeMenu = computed(() => route.meta.activeMenu || route.path)
 
 const noHiddenRoutes = computed(() => route2menu(permissionStore.routes[0].children || []))
 
@@ -79,9 +79,11 @@ watch(() => route.path, () => {
 <template>
   <div :class="{ 'has-logo': isLogo }">
     <Logo v-if="isLogo" :collapse="isCollapse" />
-    <a-menu v-model:selectedKeys="selectedKeys" :inline-collapsed="isCollapse && !isTop"
+    <a-menu
+      v-model:selected-keys="selectedKeys" :inline-collapsed="isCollapse && !isTop"
       :theme="isLeft ? 'dark' : 'light'" :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes"
-      @click="handleClick" />
+      @click="handleClick"
+    />
   </div>
 </template>
 

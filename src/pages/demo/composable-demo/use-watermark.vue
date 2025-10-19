@@ -10,8 +10,10 @@ const { setWatermark: setGlobalWatermark, clearWatermark: clearGlobalWatermark }
 
 <template>
   <div class="app-container">
-    <a-alert message="示例说明"
-      description="通过调用 composable 开启或关闭水印，支持局部、全局、自定义样式（颜色、透明度、字体大小、字体、倾斜角度等），并自带防御（防删、防隐藏）和自适应功能" show-icon />
+    <a-alert
+      message="示例说明"
+      description="通过调用 composable 开启或关闭水印，支持局部、全局、自定义样式（颜色、透明度、字体大小、字体、倾斜角度等），并自带防御（防删、防隐藏）和自适应功能" show-icon
+    />
     <a-card title="示例">
       <div ref="localRef" class="local" />
       <template #actions>

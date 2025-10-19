@@ -1,4 +1,4 @@
-import { notification } from 'ant-design-vue'
+import { notification } from "ant-design-vue"
 
 function initStarNotification() {
   setTimeout(() => {

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import type { FormProps } from "ant-design-vue"
 import type { LoginRequestData } from "./apis/type"
 import ThemeSwitch from "@@/components/ThemeSwitch/index.vue"
 import { LockOutlined, UserOutlined } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue"
-import type { FormProps } from 'ant-design-vue'
 import { useSettingsStore } from "@/pinia/stores/settings"
 import { useUserStore } from "@/pinia/stores/user"
 import { getCaptchaApi, loginApi } from "./apis"
@@ -37,7 +37,7 @@ const loginFormData: LoginRequestData = reactive({
 })
 
 /** 登录表单校验规则 */
-const loginFormRules: FormProps['rules'] = {
+const loginFormRules: FormProps["rules"] = {
   username: [
     { required: true, message: "请输入用户名", trigger: "blur" }
   ],
@@ -92,8 +92,10 @@ createCode()
         <img src="@@/assets/images/layouts/logo-text-2.png">
       </div>
       <div class="content">
-        <a-form ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @finish="onFinish"
-          @finish-failed="onFinishFailed">
+        <a-form
+          ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @finish="onFinish"
+          @finish-failed="onFinishFailed"
+        >
           <a-form-item name="username">
             <a-input v-model:value="loginFormData.username" placeholder="用户名" tabindex="1" size="large">
               <template #prefix>
@@ -102,8 +104,10 @@ createCode()
             </a-input>
           </a-form-item>
           <a-form-item name="password">
-            <a-input-password v-model:value="loginFormData.password" placeholder="密码" type="password" tabindex="2"
-              size="large" show-password @blur="handleBlur" @focus="handleFocus">
+            <a-input-password
+              v-model:value="loginFormData.password" placeholder="密码" type="password" tabindex="2"
+              size="large" show-password @blur="handleBlur" @focus="handleFocus"
+            >
               <template #prefix>
                 <LockOutlined />
               </template>

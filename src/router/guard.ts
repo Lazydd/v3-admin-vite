@@ -2,12 +2,12 @@ import type { Router } from "vue-router"
 import { setRouteChange } from "@@/composables/useRouteListener"
 import { useTitle } from "@@/composables/useTitle"
 import { getToken } from "@@/utils/cache/cookies"
+import { message } from "ant-design-vue"
 import NProgress from "nprogress"
 import { usePermissionStore } from "@/pinia/stores/permission"
 import { useUserStore } from "@/pinia/stores/user"
 import { routerConfig } from "@/router/config"
 import { isWhiteList } from "@/router/whitelist"
-import { message } from "ant-design-vue"
 
 NProgress.configure({ showSpinner: false })
 

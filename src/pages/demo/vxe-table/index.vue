@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import type { FormInstance, FormProps } from "ant-design-vue"
 import { getTableDataApi } from "@@/apis/tables"
 import { usePagination } from "@@/composables/usePagination"
 import { DeleteOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons-vue"
 import { message } from "ant-design-vue"
 import { h, useTemplateRef } from "vue"
 import { VxeColumn, VxeTable } from "vxe-table"
-import type { FormInstance, FormProps } from 'ant-design-vue'
 
 defineOptions({
   name: "VxeTable"
@@ -77,7 +77,7 @@ const formState = ref({
   remember: true
 })
 
-const rules: FormProps['rules'] = {
+const rules: FormProps["rules"] = {
   username: [
     { required: true, message: "请输入用户名", trigger: "blur" }
   ],
@@ -119,17 +119,21 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getData
       <div class="right">
         <a-input v-model:value.trim="searchForm.username" placeholder="请输入用户名" style="width: 200px;" />
         <a-input v-model:value.trim="searchForm.phone" placeholder="请输入手机号" style="width: 200px;" />
-        <a-select v-model:value="searchForm.date" placeholder="请输入手机号" :options="[{ value: 10000 }]"
-          style="width: 200px;" />
+        <a-select
+          v-model:value="searchForm.date" placeholder="请输入手机号" :options="[{ value: 10000 }]"
+          style="width: 200px;"
+        />
         <a-button type="primary" @click="search">
           查询
         </a-button>
         <a-button :icon="h(RedoOutlined)" @click="resetSearch" title="重置" />
       </div>
     </div>
-    <VxeTable ref="tableRef" :data="tableData" align="center"
+    <VxeTable
+      ref="tableRef" :data="tableData" align="center"
       :row-config="{ keyField: 'id', isCurrent: true, isHover: true }" :checkbox-config="{ reserve: true }"
-      :loading="loading">
+      :loading="loading"
+    >
       <VxeColumn type="checkbox" width="70" />
       <VxeColumn field="id" title="id" />
       <VxeColumn field="username" title="Name" />
@@ -148,13 +152,17 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getData
       </VxeColumn>
     </VxeTable>
     <div class="pagination">
-      <a-pagination v-model:current="paginationData.currentPage" v-model:page-size="paginationData.pageSize"
+      <a-pagination
+        v-model:current="paginationData.currentPage" v-model:page-size="paginationData.pageSize"
         :total="paginationData.total" show-size-changer :page-size-options="['20', '50', '100', '200']"
-        :show-total="(total: number) => `共 ${total} 条`" show-quick-jumper @change="handleCurrentChange" />
+        :show-total="(total: number) => `共 ${total} 条`" show-quick-jumper @change="handleCurrentChange"
+      />
     </div>
     <a-modal v-model:open="open" centered :confirm-loading="confirmLoading" @ok="handleOk" @cancel="cancel">
-      <a-form :model="formState" ref="formRef" :label-col="{ span: 6 }" :wrapper-col="{ span: 16 }" autocomplete="off"
-        :rules="rules">
+      <a-form
+        :model="formState" ref="formRef" :label-col="{ span: 6 }" :wrapper-col="{ span: 16 }" autocomplete="off"
+        :rules="rules"
+      >
         <a-form-item label="Username" name="username">
           <a-input v-model:value="formState.username" placeholder="请选择日期" />
         </a-form-item>

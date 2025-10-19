@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { NotifyItem } from "./type"
+import { BellOutlined } from "@ant-design/icons-vue"
+import { message } from "ant-design-vue"
 import { messageData, notifyData, todoData } from "./data"
 import List from "./List.vue"
-import { BellOutlined } from '@ant-design/icons-vue'
-import { message } from 'ant-design-vue'
 
 type TabName = "通知" | "消息" | "待办"
 
@@ -54,8 +54,8 @@ function handleHistory() {
 
 <template>
   <div class="notify">
-    <a-popover placement="bottom" :width="popoverWidth" trigger="click" overlayClassName="notify-width">
-      <a-badge :count="badgeValue" :overflowCount="badgeMax">
+    <a-popover placement="bottom" :width="popoverWidth" trigger="click" overlay-class-name="notify-width">
+      <a-badge :count="badgeValue" :overflow-count="badgeMax">
         <a-tooltip effect="dark" content="消息通知" placement="bottom">
           <template #title>
             消息通知
@@ -68,7 +68,7 @@ function handleHistory() {
           <a-tab-pane v-for="(item, index) in data" :key="index" :tab="item.name">
             <template #tab>
               {{ item.name }}
-              <a-badge :count="item.list.length" :overflowCount="badgeMax" />
+              <a-badge :count="item.list.length" :overflow-count="badgeMax" />
             </template>
             <div style="height: 400px; overflow-y: auto;">
               <List :data="item.list" />
@@ -90,14 +90,13 @@ function handleHistory() {
   text-align: center;
   padding-top: 12px;
   border-top: 1px solid var(--color-border);
-
-
 }
 
 .ant-badge {
   font-size: 20px;
 }
 </style>
+
 <style>
 .notify-width {
   width: 400px;

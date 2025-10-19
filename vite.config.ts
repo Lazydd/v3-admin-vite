@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
     // 开发环境服务器配置
     server: {
       // 是否监听所有地址
-      host: '0.0.0.0',
+      host: "0.0.0.0",
       // 端口号
       port: 3333,
       // 端口被占用时，是否直接退出
@@ -33,9 +33,9 @@ export default defineConfig(({ mode }) => {
       // 是否自动打开浏览器
       open: false,
       headers: {
-        'Cross-Origin-Opener-Policy': 'same-origin',
-        'Cross-Origin-Embedder-Policy': 'require-corp',
-        'Access-Control-Allow-Origin': '*',
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Access-Control-Allow-Origin": "*"
       },
       // 禁用或配置 HMR 连接 设置 server.hmr.overlay 为 false 可以禁用服务器错误遮罩层
       hmr: { overlay: false },
@@ -88,12 +88,12 @@ export default defineConfig(({ mode }) => {
         ? undefined
         : {
           // 打包构建时移除 console.log
-          pure: ["console.log"],
-          // 打包构建时移除 debugger
-          drop: ["debugger"],
-          // 打包构建时移除所有注释
-          legalComments: "none"
-        },
+            pure: ["console.log"],
+            // 打包构建时移除 debugger
+            drop: ["debugger"],
+            // 打包构建时移除所有注释
+            legalComments: "none"
+          },
     // 依赖预构建
     // optimizeDeps: {
     //   include: ["element-plus/es/components/*/style/css"]
@@ -133,7 +133,7 @@ export default defineConfig(({ mode }) => {
       // 自动按需导入 API
       AutoImport({
         imports: ["vue", "vue-router", "pinia"],
-        dts: "types/auto/auto-imports.d.ts",
+        dts: "types/auto/auto-imports.d.ts"
       }),
       // 自动按需导入组件
       Components({
@@ -142,6 +142,6 @@ export default defineConfig(({ mode }) => {
       }),
       // 为项目开启 MCP Server
       VueMcp()
-    ],
+    ]
   }
 })

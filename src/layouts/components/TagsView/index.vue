@@ -134,24 +134,36 @@ listenerRouteChange((route) => {
 <template>
   <div class="tags-view-container">
     <ScrollPane class="tags-view-wrapper" :tag-refs="tagRefs">
-      <router-link v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
+      <router-link
+        v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
         :class="{ active: isActive(tag) }" class="tags-view-item" :to="{ path: tag.path, query: tag.query }"
-        @click.middle="!isAffix(tag) && closeSelectedTag(tag)">
-        <a-dropdown :trigger="['contextmenu']" @openChange="selectedTag = tag">
+        @click.middle="!isAffix(tag) && closeSelectedTag(tag)"
+      >
+        <a-dropdown :trigger="['contextmenu']" @open-change="selectedTag = tag">
           <div>
             {{ tag.meta?.title }}
           </div>
           <template #overlay>
             <a-menu>
-              <a-menu-item key="1" @click="refreshSelectedTag(selectedTag)">刷新</a-menu-item>
-              <a-menu-item key="2" v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</a-menu-item>
-              <a-menu-item key="3" @click="closeOthersTags">关闭其它</a-menu-item>
-              <a-menu-item key="4" @click="closeAllTags(selectedTag)">关闭所有</a-menu-item>
+              <a-menu-item key="1" @click="refreshSelectedTag(selectedTag)">
+                刷新
+              </a-menu-item>
+              <a-menu-item key="2" v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
+                关闭
+              </a-menu-item>
+              <a-menu-item key="3" @click="closeOthersTags">
+                关闭其它
+              </a-menu-item>
+              <a-menu-item key="4" @click="closeAllTags(selectedTag)">
+                关闭所有
+              </a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
-        <CloseCircleOutlined class="close-icon" v-if="!isAffix(tag)" :size="12"
-          @click.prevent.stop="closeSelectedTag(tag)" />
+        <CloseCircleOutlined
+          class="close-icon" v-if="!isAffix(tag)" :size="12"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </ScrollPane>
   </div>
@@ -195,7 +207,7 @@ listenerRouteChange((route) => {
         border-color: var(--v3-tagsview-tag-active-border-color);
       }
 
-      >span {
+      > span {
         margin-left: 5px;
         margin-right: 1px;
         border-radius: 50%;

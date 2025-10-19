@@ -2,7 +2,7 @@
 import { useFetchSelect } from "@@/composables/useFetchSelect"
 import { getSelectDataApi } from "./apis/use-fetch-select"
 
-const { loading, options, value } = useFetchSelect({
+const { options, value } = useFetchSelect({
   api: getSelectDataApi
 })
 </script>
@@ -13,6 +13,4 @@ const { loading, options, value } = useFetchSelect({
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

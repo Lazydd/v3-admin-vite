@@ -1,4 +1,4 @@
-import type { AntdIconProps } from '@ant-design/icons-vue'
+import type { AntdIconProps } from "@ant-design/icons-vue"
 import type { SvgName } from "~virtual/svg-component"
 import "vue-router"
 

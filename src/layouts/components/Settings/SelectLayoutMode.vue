@@ -32,8 +32,10 @@ const { isLeft, isTop, isLeftTop, setLayoutMode } = useLayoutMode()
       <template #title>
         <span>混合模式</span>
       </template>
-      <a-layout class="layout-mode left-top" :class="{ active: isLeftTop }"
-        @click="setLayoutMode(LayoutModeEnum.LeftTop)">
+      <a-layout
+        class="layout-mode left-top" :class="{ active: isLeftTop }"
+        @click="setLayoutMode(LayoutModeEnum.LeftTop)"
+      >
         <a-layout-header />
         <a-layout>
           <a-layout-sider />
