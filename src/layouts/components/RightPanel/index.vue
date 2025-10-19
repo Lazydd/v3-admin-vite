@@ -8,7 +8,7 @@ const show = ref(false)
   <div class="handle-button" @click="show = true">
     <SettingOutlined />
   </div>
-  <a-drawer v-model:open="show" size="300px">
+  <a-drawer v-model:open="show" :width="300">
     <slot />
   </a-drawer>
 </template>

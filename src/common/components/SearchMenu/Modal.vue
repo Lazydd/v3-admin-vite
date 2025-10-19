@@ -69,7 +69,8 @@ function scrollTo(index: number) {
   if (!resultRef.value) return
   const scrollTop = resultRef.value.getScrollTop(index)
   // 手动控制 el-scrollbar 滚动条滚动，设置滚动条到顶部的距离
-  scrollbarRef.value?.setScrollTop(scrollTop)
+  // scrollbarRef.value?.scrollTop(scrollTop)
+  scrollbarRef.value?.scrollTo({ top: scrollTop })
 }
 
 /** 键盘上键 */
@@ -173,15 +174,6 @@ function handleReleaseUpOrDown() {
 .search-modal__private {
   .svg-icon {
     font-size: 18px;
-  }
-
-  .el-dialog__header {
-    display: none;
-  }
-
-  .el-dialog__footer {
-    border-top: 1px solid var(--el-border-color);
-    padding-top: var(--el-dialog-padding-primary);
   }
 }
 </style>

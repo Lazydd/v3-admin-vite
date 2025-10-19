@@ -25,7 +25,4 @@ h4 {
   align-items: center;
 }
 
-.el-link {
-  font-size: 18px;
-}
 </style>

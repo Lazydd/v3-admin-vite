@@ -12,7 +12,7 @@ function handleOpen() {
 
 <template>
   <div>
-    <a-tooltip>
+    <a-tooltip placement="bottom">
       <template #title>
         搜索菜单
       </template>

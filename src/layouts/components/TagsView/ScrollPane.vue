@@ -108,7 +108,7 @@ listenerRouteChange(() => {
 
 <template>
   <div class="scroll-container">
-    <a-tooltip>
+    <a-tooltip placement="right">
       <template #title>
         <span>向左滚动标签（超出最大宽度可点击）</span>
       </template>
@@ -119,7 +119,7 @@ listenerRouteChange(() => {
         <slot />
       </div>
     </div>
-    <a-tooltip>
+    <a-tooltip placement="left">
       <template #title>
         <span>向右滚动标签（超出最大宽度可点击）</span>
       </template>

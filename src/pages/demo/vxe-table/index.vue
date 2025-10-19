@@ -5,12 +5,13 @@ import { DeleteOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons-vu
 import { message } from "ant-design-vue"
 import { h, useTemplateRef } from "vue"
 import { VxeColumn, VxeTable } from "vxe-table"
+import type { FormInstance, FormProps } from 'ant-design-vue'
 
 defineOptions({
   name: "VxeTable"
 })
 
-const formRef = useTemplateRef("formRef")
+const formRef = useTemplateRef<FormInstance>("formRef")
 const tableRef = useTemplateRef("tableRef")
 
 const { paginationData, handleCurrentChange } = usePagination()
@@ -76,7 +77,7 @@ const formState = ref({
   remember: true
 })
 
-const rules = {
+const rules: FormProps['rules'] = {
   username: [
     { required: true, message: "请输入用户名", trigger: "blur" }
   ],
@@ -92,14 +93,14 @@ const rules = {
 const open = ref(false)
 const confirmLoading = ref(false)
 function handleOk() {
-  formRef.value.validate().then(() => {
+  formRef.value?.validate().then(() => {
     confirmLoading.value = true
   })
 }
 
 function cancel() {
   confirmLoading.value = false
-  formRef.value.resetFields()
+  formRef.value?.resetFields()
 }
 watch([() => paginationData.currentPage, () => paginationData.pageSize], getData, { immediate: true })
 </script>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { NotifyItem } from "./type"
-import { Bell } from "@element-plus/icons-vue"
 import { messageData, notifyData, todoData } from "./data"
 import List from "./List.vue"
 import { BellOutlined } from '@ant-design/icons-vue'

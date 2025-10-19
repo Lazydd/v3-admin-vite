@@ -33,7 +33,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: "Demo",
         meta: {
           title: "示例集合",
-          icon: h(CustomerServiceOutlined)
+          icon: CustomerServiceOutlined
         },
         children: [
           {
@@ -98,7 +98,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         path: "/link",
         meta: {
           title: "文档链接",
-          icon: h(FileAddOutlined)
+          icon: FileAddOutlined
         },
         children: [
           {
@@ -174,7 +174,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
-  }
+  },
 ]
 
 /**
@@ -190,7 +190,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
   //   name: "Permission",
   //   meta: {
   //     title: "权限演示",
-  //     icon: h(FrownOutlined),
+  //     // icon: h(FrownOutlined),
   //     // 可以在根路由中设置角色
   //     roles: ["admin", "editor"],
   //     alwaysShow: true

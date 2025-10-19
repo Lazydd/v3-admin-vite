@@ -10,13 +10,10 @@
     "build:staging": "vue-tsc && vite build --mode staging",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix",
-    "prepare": "husky",
-    "test": "vitest"
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
-    "@element-plus/icons-vue": "2.3.2",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.12.2",
     "dayjs": "^1.11.18",

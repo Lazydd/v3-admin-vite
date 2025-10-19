@@ -1,5 +1,3 @@
-/// <reference types="vitest/config" />
-
 import { resolve } from "node:path"
 import vue from "@vitejs/plugin-vue"
 
@@ -68,7 +66,7 @@ export default defineConfig(({ mode }) => {
            */
           manualChunks: {
             vue: ["vue", "vue-router", "pinia"],
-            element: ["element-plus", "@element-plus/icons-vue"],
+            element: ["element-plus", "@ant-design/icons-vue"],
             vxe: ["vxe-table"]
           }
         }

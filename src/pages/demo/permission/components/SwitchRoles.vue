@@ -11,21 +11,21 @@ watch(switchRoles, (value) => {
 </script>
 
 <template>
-  <el-card shadow="never">
+  <a-card>
     <div>
       <span>你的角色：</span>
-      <el-tag v-for="(role, index) in userStore.roles" :key="index" effect="plain" size="large">
+      <a-tag v-for="(role, index) in userStore.roles" :key="index" size="large" color="processing">
         {{ role }}
-      </el-tag>
+      </a-tag>
     </div>
     <div class="switch-roles">
       <span>切换用户：</span>
-      <el-radio-group v-model="switchRoles">
-        <el-radio-button label="editor" value="editor" />
-        <el-radio-button label="admin" value="admin" />
-      </el-radio-group>
+      <a-radio-group v-model:value="switchRoles" :options="[
+        { label: 'editor', value: 'editor' },
+        { label: 'admin', value: 'admin' },
+      ]" option-type="button" button-style="solid" />
     </div>
-  </el-card>
+  </a-card>
 </template>
 
 <style lang="scss" scoped>

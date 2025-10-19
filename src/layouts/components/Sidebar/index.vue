@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { h, ref } from "vue"
 import type { MenuProps } from "ant-design-vue"
 import { useDevice } from "@@/composables/useDevice"
 import { useLayoutMode } from "@@/composables/useLayoutMode"
@@ -53,7 +54,7 @@ function route2menu(arr: any[]) {
     const newItem = {
       key: item.name,
       label: item.meta?.title,
-      icon: item.meta?.icon,
+      icon: item.meta?.icon ? h(item.meta?.icon) : undefined,
       children: null as any
     }
     if (item.children && item.children.length > 0) {
@@ -62,7 +63,7 @@ function route2menu(arr: any[]) {
     return newItem
   })
 }
-const selectedKeys = ref([activeMenu])
+const selectedKeys = ref<any[]>([activeMenu])
 
 const handleClick: MenuProps["onClick"] = (e) => {
   router.push({ name: String(e.key) })
@@ -72,10 +73,8 @@ const handleClick: MenuProps["onClick"] = (e) => {
 <template>
   <div :class="{ 'has-logo': isLogo }">
     <Logo v-if="isLogo" :collapse="isCollapse" />
-    <a-menu
-      v-model:selected-keys="selectedKeys" :inline-collapsed="isCollapse && !isTop" theme="dark"
-      :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes" @click="handleClick"
-    />
+    <a-menu v-model:selectedKeys="selectedKeys" :inline-collapsed="isCollapse && !isTop" theme="dark"
+      :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes" @click="handleClick" />
   </div>
 </template>
 
@@ -89,12 +88,6 @@ const handleClick: MenuProps["onClick"] = (e) => {
     width: v-bind(tipLineWidth);
     height: 100%;
     background-color: var(--v3-sidebar-menu-tip-line-bg-color);
-  }
-}
-
-.has-logo {
-  .el-scrollbar {
-    height: calc(100% - var(--v3-header-height));
   }
 }
 </style>

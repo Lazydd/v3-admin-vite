@@ -79,7 +79,7 @@ function handleContentFullClick() {
 <template>
   <div>
     <!-- 全屏 -->
-    <a-tooltip v-if="!content">
+    <a-tooltip v-if="!content" placement="bottom">
       <template #title>
         {{ fullscreenTips }}
       </template>

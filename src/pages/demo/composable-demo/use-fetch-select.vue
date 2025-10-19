@@ -14,11 +14,5 @@ const { loading, options, value } = useFetchSelect({
 </template>
 
 <style lang="scss" scoped>
-.el-alert {
-  margin-bottom: 20px;
-}
 
-.el-card {
-  margin-bottom: 20px;
-}
 </style>
