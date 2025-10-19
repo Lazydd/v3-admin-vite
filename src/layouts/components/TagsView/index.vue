@@ -169,16 +169,12 @@ listenerRouteChange((route) => {
 <template>
   <div class="tags-view-container">
     <ScrollPane class="tags-view-wrapper" :tag-refs="tagRefs">
-      <router-link
-        v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
+      <router-link v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
         :class="{ active: isActive(tag) }" class="tags-view-item" :to="{ path: tag.path, query: tag.query }"
-        @click.middle="!isAffix(tag) && closeSelectedTag(tag)" @contextmenu.prevent="openMenu(tag, $event)"
-      >
+        @click.middle="!isAffix(tag) && closeSelectedTag(tag)" @contextmenu.prevent="openMenu(tag, $event)">
         {{ tag.meta?.title }}
-        <CloseCircleOutlined
-          class="close-icon" v-if="!isAffix(tag)" :size="12"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        />
+        <CloseCircleOutlined class="close-icon" v-if="!isAffix(tag)" :size="12"
+          @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </ScrollPane>
     <ul v-show="visible" class="contextmenu" :style="{ left: `${left}px`, top: `${top}px` }">
@@ -236,7 +232,7 @@ listenerRouteChange((route) => {
         border-color: var(--v3-tagsview-tag-active-border-color);
       }
 
-      > span {
+      >span {
         margin-left: 5px;
         margin-right: 1px;
         border-radius: 50%;

@@ -17,11 +17,11 @@ const settingsStore = useSettingsStore()
 
 const { listenerRouteChange } = useRouteListener()
 
-/** 滚动条组件元素的引用 */
-const scrollbarRef = useTemplateRef("scrollbarRef")
+/** 滚动容器元素的引用 */
+const scrollContainerRef = useTemplateRef("scrollContainerRef")
 
-/** 滚动条内容元素的引用 */
-const scrollbarContentRef = useTemplateRef("scrollbarContentRef")
+/** 滚动内容元素的引用 */
+const scrollContentRef = useTemplateRef("scrollContentRef")
 
 /** 当前滚动条距离左边的距离 */
 let currentScrollLeft = 0
@@ -30,12 +30,15 @@ let currentScrollLeft = 0
 const translateDistance = 200
 
 /** 滚动时触发 */
-function scroll({ scrollLeft }: { scrollLeft: number }) {
-  currentScrollLeft = scrollLeft
+function scroll(event: Event) {
+  const target = event.target as HTMLElement
+  currentScrollLeft = target.scrollLeft
 }
 
 /** 鼠标滚轮滚动时触发 */
-function wheelScroll({ deltaY }: WheelEvent) {
+function wheelScroll(event: WheelEvent) {
+  event.preventDefault()
+  const { deltaY } = event
   if (deltaY.toString().startsWith("-")) {
     scrollTo("left")
   } else {
@@ -46,27 +49,27 @@ function wheelScroll({ deltaY }: WheelEvent) {
 /** 获取可能需要的宽度 */
 function getWidth() {
   // 可滚动内容的长度
-  const scrollbarContentRefWidth = scrollbarContentRef.value!.clientWidth
+  const scrollContentWidth = scrollContentRef.value!.scrollWidth
   // 滚动可视区宽度
-  const scrollbarRefWidth = scrollbarRef.value!.wrapRef!.clientWidth
+  const scrollContainerWidth = scrollContainerRef.value!.clientWidth
   // 最后剩余可滚动的宽度
-  const lastDistance = scrollbarContentRefWidth - scrollbarRefWidth - currentScrollLeft
+  const lastDistance = scrollContentWidth - scrollContainerWidth - currentScrollLeft
 
-  return { scrollbarContentRefWidth, scrollbarRefWidth, lastDistance }
+  return { scrollContentWidth, scrollContainerWidth, lastDistance }
 }
 
 /** 左右滚动 */
 function scrollTo(direction: "left" | "right", distance: number = translateDistance) {
   let scrollLeft = 0
-  const { scrollbarContentRefWidth, scrollbarRefWidth, lastDistance } = getWidth()
+  const { scrollContentWidth, scrollContainerWidth, lastDistance } = getWidth()
   // 没有横向滚动条，直接结束
-  if (scrollbarRefWidth > scrollbarContentRefWidth) return
+  if (scrollContainerWidth > scrollContentWidth) return
   if (direction === "left") {
     scrollLeft = Math.max(0, currentScrollLeft - distance)
   } else {
     scrollLeft = Math.min(currentScrollLeft + distance, currentScrollLeft + lastDistance)
   }
-  scrollbarRef.value!.setScrollLeft(scrollLeft)
+  scrollContainerRef.value!.scrollLeft = scrollLeft
 }
 
 /** 移动到目标位置 */
@@ -79,7 +82,7 @@ function moveTo() {
       const el: HTMLElement = tagRefs[i].$el
       const offsetWidth = el.offsetWidth
       const offsetLeft = el.offsetLeft
-      const { scrollbarRefWidth } = getWidth()
+      const { scrollContainerWidth } = getWidth()
       // 当前 tag 在可视区域左边时
       if (offsetLeft < currentScrollLeft) {
         const distance = currentScrollLeft - offsetLeft
@@ -87,7 +90,7 @@ function moveTo() {
         return
       }
       // 当前 tag 在可视区域右边时
-      const width = scrollbarRefWidth + currentScrollLeft - offsetWidth
+      const width = scrollContainerWidth + currentScrollLeft - offsetWidth
       if (offsetLeft > width) {
         const distance = offsetLeft - width
         scrollTo("right", distance)
@@ -111,11 +114,11 @@ listenerRouteChange(() => {
       </template>
       <LeftOutlined class="arrow left" @click="scrollTo('left')" />
     </a-tooltip>
-    <el-scrollbar ref="scrollbarRef" @wheel.passive="wheelScroll" @scroll="scroll">
-      <div ref="scrollbarContentRef" class="scrollbar-content">
+    <div ref="scrollContainerRef" class="scroll-container-native" @wheel="wheelScroll" @scroll="scroll">
+      <div ref="scrollContentRef" class="scroll-content">
         <slot />
       </div>
-    </el-scrollbar>
+    </div>
     <a-tooltip>
       <template #title>
         <span>向右滚动标签（超出最大宽度可点击）</span>
@@ -151,14 +154,10 @@ listenerRouteChange(() => {
     }
   }
 
-  .el-scrollbar {
+  .scroll-container-native {
     flex: 1;
-    // 防止换行（超出宽度时，显示滚动条）
+    overflow: hidden;
     white-space: nowrap;
-
-    .scrollbar-content {
-      display: inline-block;
-    }
   }
 
   .screenfull {
