@@ -21,15 +21,6 @@ const { listenerRouteChange } = useRouteListener()
 /** 标签页组件元素的引用数组 */
 const tagRefs = useTemplateRef<InstanceType<typeof RouterLink>[]>("tagRefs")
 
-/** 右键菜单的状态 */
-const visible = ref(false)
-
-/** 右键菜单的 top 位置 */
-const top = ref(0)
-
-/** 右键菜单的 left 位置 */
-const left = ref(0)
-
 /** 当前正在右键操作的标签页 */
 const selectedTag = ref<TagView>({})
 
@@ -132,32 +123,6 @@ function toLastView(visitedViews: TagView[], view: TagView) {
   }
 }
 
-/** 打开右键菜单面板 */
-function openMenu(tag: TagView, e: MouseEvent) {
-  const menuMinWidth = 100
-  // 当前页面宽度
-  const offsetWidth = document.body.offsetWidth
-  // 面板的最大左边距
-  const maxLeft = offsetWidth - menuMinWidth
-  // 面板距离鼠标指针的距离
-  const left15 = e.clientX + 10
-  left.value = left15 > maxLeft ? maxLeft : left15
-  top.value = e.clientY
-  // 显示面板
-  visible.value = true
-  // 更新当前正在右键操作的标签页
-  selectedTag.value = tag
-}
-
-/** 关闭右键菜单面板 */
-function closeMenu() {
-  visible.value = false
-}
-
-watch(visible, (value) => {
-  value ? document.body.addEventListener("click", closeMenu) : document.body.removeEventListener("click", closeMenu)
-})
-
 initTags()
 
 // 监听路由变化
@@ -171,26 +136,24 @@ listenerRouteChange((route) => {
     <ScrollPane class="tags-view-wrapper" :tag-refs="tagRefs">
       <router-link v-for="tag in tagsViewStore.visitedViews" :key="tag.path" ref="tagRefs"
         :class="{ active: isActive(tag) }" class="tags-view-item" :to="{ path: tag.path, query: tag.query }"
-        @click.middle="!isAffix(tag) && closeSelectedTag(tag)" @contextmenu.prevent="openMenu(tag, $event)">
-        {{ tag.meta?.title }}
+        @click.middle="!isAffix(tag) && closeSelectedTag(tag)">
+        <a-dropdown :trigger="['contextmenu']" @openChange="selectedTag = tag">
+          <div>
+            {{ tag.meta?.title }}
+          </div>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item key="1" @click="refreshSelectedTag(selectedTag)">刷新</a-menu-item>
+              <a-menu-item key="2" v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</a-menu-item>
+              <a-menu-item key="3" @click="closeOthersTags">关闭其它</a-menu-item>
+              <a-menu-item key="4" @click="closeAllTags(selectedTag)">关闭所有</a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
         <CloseCircleOutlined class="close-icon" v-if="!isAffix(tag)" :size="12"
           @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </ScrollPane>
-    <ul v-show="visible" class="contextmenu" :style="{ left: `${left}px`, top: `${top}px` }">
-      <li @click="refreshSelectedTag(selectedTag)">
-        刷新
-      </li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
-        关闭
-      </li>
-      <li @click="closeOthersTags">
-        关闭其它
-      </li>
-      <li @click="closeAllTags(selectedTag)">
-        关闭所有
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -243,30 +206,6 @@ listenerRouteChange((route) => {
           background-color: var(--v3-tagsview-tag-icon-hover-bg-color);
           color: var(--v3-tagsview-tag-icon-hover-color);
         }
-      }
-    }
-  }
-
-  .contextmenu {
-    margin: 0;
-    z-index: 3000;
-    position: fixed;
-    list-style-type: none;
-    padding: 5px 0;
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--v3-tagsview-contextmenu-text-color);
-    background-color: var(--v3-tagsview-contextmenu-bg-color);
-    box-shadow: var(--v3-tagsview-contextmenu-box-shadow);
-
-    li {
-      margin: 0;
-      padding: 7px 16px;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--v3-tagsview-contextmenu-hover-text-color);
-        background-color: var(--v3-tagsview-contextmenu-hover-bg-color);
       }
     }
   }
