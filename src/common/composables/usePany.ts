@@ -1,9 +1,11 @@
+import { notification } from 'ant-design-vue'
+
 function initStarNotification() {
   setTimeout(() => {
-    ElNotification({
-      title: "为爱发电！",
+    notification.open({
+      message: "为爱发电！",
       type: "success",
-      message: h(
+      description: h(
         "div",
         null,
         [
@@ -11,18 +13,17 @@ function initStarNotification() {
           h("a", { style: "color: teal", target: "_blank", href: "https://github.com/un-pany/v3-admin-vite" }, "点击传送")
         ]
       ),
-      duration: 0,
-      position: "bottom-right"
+      placement: "bottomRight"
     })
   }, 0)
 }
 
 function initStoreNotification() {
   setTimeout(() => {
-    ElNotification({
-      title: "懒人服务？",
+    notification.open({
+      message: "懒人服务？",
       type: "warning",
-      message: h(
+      description: h(
         "div",
         null,
         [
@@ -30,18 +31,17 @@ function initStoreNotification() {
           h("a", { style: "color: teal", target: "_blank", href: "https://github.com/un-pany/v3-admin-vite/issues/225" }, "点击获取")
         ]
       ),
-      duration: 0,
-      position: "bottom-right"
+      placement: "bottomRight"
     })
   }, 500)
 }
 
 function initMobileNotification() {
   setTimeout(() => {
-    ElNotification({
-      title: "移动端",
-      type: "primary",
-      message: h(
+    notification.open({
+      message: "移动端",
+      type: "info",
+      description: h(
         "div",
         null,
         [
@@ -49,8 +49,7 @@ function initMobileNotification() {
           h("a", { style: "color: teal", target: "_blank", href: "https://github.com/un-pany/v3-admin-vite/issues/225" }, "点击查看")
         ]
       ),
-      duration: 0,
-      position: "bottom-right"
+      placement: "bottomRight"
     })
   }, 1000)
 }

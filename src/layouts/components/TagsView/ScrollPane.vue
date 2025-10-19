@@ -146,11 +146,11 @@ listenerRouteChange(() => {
     cursor: pointer;
 
     &.left {
-      box-shadow: 5px 0 5px -6px var(--el-border-color-darker);
+      box-shadow: 5px 0 5px -6px var(--color-border-darker);
     }
 
     &.right {
-      box-shadow: -5px 0 5px -6px var(--el-border-color-darker);
+      box-shadow: -5px 0 5px -6px var(--color-border-darker);
     }
   }
 

@@ -1,4 +1,6 @@
+import { message } from "ant-design-vue"
 /** 模拟接口响应数据 */
+
 const SELECT_RESPONSE_DATA = {
   code: 0,
   data: [
@@ -32,7 +34,7 @@ export function getSelectDataApi() {
       } else {
         // 模拟接口调用出错
         reject(new Error(ERROR_MESSAGE))
-        ElMessage.error(ERROR_MESSAGE)
+        message.error(ERROR_MESSAGE)
       }
     }, 2000)
   })

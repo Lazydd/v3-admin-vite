@@ -3,6 +3,7 @@ import { getToken } from "@@/utils/cache/cookies"
 import axios from "axios"
 import { get, merge } from "lodash-es"
 import { useUserStore } from "@/pinia/stores/user"
+import { message } from "ant-design-vue"
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
@@ -33,7 +34,7 @@ function createInstance() {
       const code = apiData.code
       // 如果没有 code, 代表这不是项目后端开发的 api
       if (code === undefined) {
-        ElMessage.error("非本系统的接口")
+        message.error("非本系统的接口")
         return Promise.reject(new Error("非本系统的接口"))
       }
       switch (code) {
@@ -45,7 +46,7 @@ function createInstance() {
           return logout()
         default:
           // 不是正确的 code
-          ElMessage.error(apiData.message || "Error")
+          message.error(apiData.message || "Error")
           return Promise.reject(new Error("Error"))
       }
     },
@@ -90,7 +91,7 @@ function createInstance() {
           error.message = "HTTP 版本不受支持"
           break
       }
-      ElMessage.error(error.message)
+      message.error(error.message)
       return Promise.reject(error)
     }
   )

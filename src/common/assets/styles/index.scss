@@ -2,9 +2,7 @@
 @import "./variables.css";
 // Transition
 @import "./transition.scss";
-// Element Plus
-// @import "./element-plus.css";
-// @import "./element-plus.scss";
+// Ant Design Vue
 @import "./ant-design-vue.scss";
 // Vxe Table
 @import "./vxe-table.css";
@@ -23,10 +21,12 @@
 
 html {
   height: 100%;
+
   // 灰色模式
   &.grey-mode {
     filter: grayscale(1);
   }
+
   // 色弱模式
   &.color-weakness {
     filter: invert(0.8);
@@ -71,7 +71,7 @@ div:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 0;
   background-color: var(--vxe-toolbar-background-color);
 
   .left,
@@ -85,6 +85,6 @@ div:focus {
 .pagination {
   display: flex;
   justify-content: flex-end;
-  padding: 20px;
+  padding: 20px 0;
   background-color: var(--vxe-pager-background-color);
 }

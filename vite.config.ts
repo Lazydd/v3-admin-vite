@@ -1,9 +1,8 @@
 import { resolve } from "node:path"
 import vue from "@vitejs/plugin-vue"
-
 import AutoImport from "unplugin-auto-import/vite"
 import SvgComponent from "unplugin-svg-component/vite"
-import { ElementPlusResolver, AntDesignVueResolver } from "unplugin-vue-components/resolvers"
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
 import { defineConfig, loadEnv } from "vite"
 import { VueMcp } from "vite-plugin-vue-mcp"
@@ -26,13 +25,20 @@ export default defineConfig(({ mode }) => {
     // 开发环境服务器配置
     server: {
       // 是否监听所有地址
-      host: true,
+      host: '0.0.0.0',
       // 端口号
       port: 3333,
       // 端口被占用时，是否直接退出
       strictPort: false,
       // 是否自动打开浏览器
-      open: true,
+      open: false,
+      headers: {
+        'Cross-Origin-Opener-Policy': 'same-origin',
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Access-Control-Allow-Origin': '*',
+      },
+      // 禁用或配置 HMR 连接 设置 server.hmr.overlay 为 false 可以禁用服务器错误遮罩层
+      hmr: { overlay: false },
       // 反向代理
       proxy: {
         "/api/v1": {
@@ -66,7 +72,7 @@ export default defineConfig(({ mode }) => {
            */
           manualChunks: {
             vue: ["vue", "vue-router", "pinia"],
-            element: ["element-plus", "@ant-design/icons-vue"],
+            antd: ["ant-design-vue", "@ant-design/icons-vue"],
             vxe: ["vxe-table"]
           }
         }
@@ -89,9 +95,9 @@ export default defineConfig(({ mode }) => {
           legalComments: "none"
         },
     // 依赖预构建
-    optimizeDeps: {
-      include: ["element-plus/es/components/*/style/css"]
-    },
+    // optimizeDeps: {
+    //   include: ["element-plus/es/components/*/style/css"]
+    // },
     // CSS 相关配置
     css: {
       // 线程中运行 CSS 预处理器
@@ -128,25 +134,14 @@ export default defineConfig(({ mode }) => {
       AutoImport({
         imports: ["vue", "vue-router", "pinia"],
         dts: "types/auto/auto-imports.d.ts",
-        resolvers: [ElementPlusResolver()]
       }),
       // 自动按需导入组件
       Components({
         dts: "types/auto/components.d.ts",
-        resolvers: [ElementPlusResolver(), AntDesignVueResolver({ importStyle: false })]
+        resolvers: [AntDesignVueResolver({ importStyle: false })]
       }),
       // 为项目开启 MCP Server
       VueMcp()
     ],
-    // Configuring Vitest: https://cn.vitest.dev/config
-    test: {
-      include: ["tests/**/*.test.{ts,js}"],
-      environment: "happy-dom",
-      server: {
-        deps: {
-          inline: ["element-plus"]
-        }
-      }
-    }
   }
 })

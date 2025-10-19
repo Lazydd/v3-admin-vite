@@ -11,37 +11,35 @@ const { isLeft, isTop, isLeftTop, setLayoutMode } = useLayoutMode()
       <template #title>
         <span>左侧模式</span>
       </template>
-      <el-container class="layout-mode left" :class="{ active: isLeft }" @click="setLayoutMode(LayoutModeEnum.Left)">
-        <el-aside />
-        <el-container>
-          <el-header />
-          <el-main />
-        </el-container>
-      </el-container>
+      <a-layout class="layout-mode left" :class="{ active: isLeft }" @click="setLayoutMode(LayoutModeEnum.Left)">
+        <a-layout-sider />
+        <a-layout>
+          <a-layout-header />
+          <a-layout-content />
+        </a-layout>
+      </a-layout>
     </a-tooltip>
     <a-tooltip>
       <template #title>
         <span>顶部模式</span>
       </template>
-      <el-container class="layout-mode top" :class="{ active: isTop }" @click="setLayoutMode(LayoutModeEnum.Top)">
-        <el-header />
-        <el-main />
-      </el-container>
+      <a-layout class="layout-mode top" :class="{ active: isTop }" @click="setLayoutMode(LayoutModeEnum.Top)">
+        <a-layout-header />
+        <a-layout-content />
+      </a-layout>
     </a-tooltip>
     <a-tooltip>
       <template #title>
         <span>混合模式</span>
       </template>
-      <el-container
-        class="layout-mode left-top" :class="{ active: isLeftTop }"
-        @click="setLayoutMode(LayoutModeEnum.LeftTop)"
-      >
-        <el-header />
-        <el-container>
-          <el-aside />
-          <el-main />
-        </el-container>
-      </el-container>
+      <a-layout class="layout-mode left-top" :class="{ active: isLeftTop }"
+        @click="setLayoutMode(LayoutModeEnum.LeftTop)">
+        <a-layout-header />
+        <a-layout>
+          <a-layout-sider />
+          <a-layout-content />
+        </a-layout>
+      </a-layout>
     </a-tooltip>
   </div>
 </template>
@@ -54,6 +52,7 @@ const { isLeft, isTop, isLeftTop, setLayoutMode } = useLayoutMode()
 
 .layout-mode {
   width: 60px;
+  height: 56px;
   flex-grow: 0;
   overflow: hidden;
   cursor: pointer;
@@ -61,57 +60,61 @@ const { isLeft, isTop, isLeftTop, setLayoutMode } = useLayoutMode()
   border: 2px solid transparent;
 
   &:hover {
-    border: 2px solid var(--el-color-primary);
+    border: 2px solid var(--color-primary);
   }
 }
 
 .active {
-  border: 2px solid var(--el-color-primary);
+  border: 2px solid var(--color-primary);
 }
 
-.el-header {
+.ant-layout-header {
   height: 12px;
+  padding-inline: unset;
 }
 
-.el-aside {
-  width: 16px;
+.ant-layout-sider {
+  width: 16px !important;
+  flex: unset !important;
+  max-width: unset !important;
+  min-width: unset !important;
 }
 
 .left {
-  .el-header {
-    background-color: var(--el-fill-color-darker);
+  .ant-layout-header {
+    background-color: #e6e8eb;
   }
 
-  .el-aside {
-    background-color: var(--el-color-primary);
+  .ant-layout-sider {
+    background-color: var(--color-primary);
   }
 
-  .el-main {
-    background-color: var(--el-fill-color-lighter);
+  .ant-layout-content {
+    background-color: #fafafa;
   }
 }
 
 .top {
-  .el-header {
-    background-color: var(--el-color-primary);
+  .ant-layout-header {
+    background-color: var(--color-primary);
   }
 
-  .el-main {
-    background-color: var(--el-fill-color-lighter);
+  .ant-layout-content {
+    background-color: #fafafa;
   }
 }
 
 .left-top {
-  .el-header {
-    background-color: var(--el-fill-color-darker);
+  .ant-layout-header {
+    background-color: #e6e8eb;
   }
 
-  .el-aside {
-    background-color: var(--el-color-primary);
+  .ant-layout-sider {
+    background-color: var(--color-primary);
   }
 
-  .el-main {
-    background-color: var(--el-fill-color-lighter);
+  .ant-layout-content {
+    background-color: #fafafa;
   }
 }
 </style>

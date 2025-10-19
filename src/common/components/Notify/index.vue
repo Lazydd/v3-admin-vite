@@ -89,7 +89,7 @@ function handleHistory() {
 .notify-history {
   text-align: center;
   padding-top: 12px;
-  border-top: 1px solid var(--el-border-color);
+  border-top: 1px solid var(--color-border);
 
 
 }

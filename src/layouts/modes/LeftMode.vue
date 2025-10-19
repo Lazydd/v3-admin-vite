@@ -167,7 +167,7 @@ $transition-time: 0.35s;
   // 既是 mobile 又是顶部或混合布局模式
   &.noLeft {
     .sidebar-container {
-      background-color: var(--el-bg-color);
+      background-color: var(--color-bg);
     }
   }
 }

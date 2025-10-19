@@ -15,7 +15,7 @@ import SwitchRoles from "./components/SwitchRoles.vue"
       </a-button>
     </a-card>
     <a-card title="权限函数 checkPermission 示例" class="margin-top-20">
-      Element Plus 的 el-tab-pane 和 el-table-column 以及其它动态渲染 DOM 的场景不适合使用 v-permission
+      a-tab-pane 和 a-table-column 以及其它动态渲染 DOM 的场景不适合使用 v-permission
       这种情况下你可以通过 v-if + checkPermission 来实现
       <a-tabs type="card" class="margin-top-20">
         <a-tab-pane key="1" v-if="checkPermission(['admin'])" tab="admin">

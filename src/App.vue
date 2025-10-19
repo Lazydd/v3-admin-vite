@@ -2,7 +2,6 @@
 import { useGreyAndColorWeakness } from "@@/composables/useGreyAndColorWeakness"
 // import { usePany } from "@@/composables/usePany"
 import { useTheme } from "@@/composables/useTheme"
-// import zhCn from "element-plus/es/locale/lang/zh-cn" // Element Plus 中文包
 import zhCn from "ant-design-vue/es/locale/zh_CN" // Element Plus 中文包
 
 const { initTheme } = useTheme()

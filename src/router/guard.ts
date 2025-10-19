@@ -7,6 +7,7 @@ import { usePermissionStore } from "@/pinia/stores/permission"
 import { useUserStore } from "@/pinia/stores/user"
 import { routerConfig } from "@/router/config"
 import { isWhiteList } from "@/router/whitelist"
+import { message } from "ant-design-vue"
 
 NProgress.configure({ showSpinner: false })
 
@@ -45,7 +46,7 @@ export function registerNavigationGuard(router: Router) {
     } catch (error) {
       // 过程中发生任何错误，都直接重置 Token，并重定向到登录页面
       userStore.resetToken()
-      ElMessage.error((error as Error).message || "路由守卫发生错误")
+      message.error((error as Error).message || "路由守卫发生错误")
       return LOGIN_PATH
     }
   })

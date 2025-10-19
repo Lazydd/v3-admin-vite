@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// import type { FormRules } from "element-plus"
 import type { LoginRequestData } from "./apis/type"
 import ThemeSwitch from "@@/components/ThemeSwitch/index.vue"
 import { LockOutlined, UserOutlined } from "@ant-design/icons-vue"
@@ -173,7 +172,7 @@ createCode()
     max-width: 90%;
     border-radius: 20px;
     box-shadow: 0 0 10px #dcdfe6;
-    background-color: var(--el-bg-color);
+    background-color: var(--color-bg);
     overflow: hidden;
 
     .title {
@@ -189,25 +188,6 @@ createCode()
 
     .content {
       padding: 20px 50px 50px 50px;
-
-      :deep(.el-input-group__append) {
-        padding: 0;
-        overflow: hidden;
-
-        .el-image {
-          width: 100px;
-          height: 40px;
-          border-left: 0px;
-          user-select: none;
-          cursor: pointer;
-          text-align: center;
-        }
-      }
-
-      .el-button {
-        width: 100%;
-        margin-top: 10px;
-      }
     }
   }
 }

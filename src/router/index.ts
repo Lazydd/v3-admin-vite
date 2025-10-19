@@ -29,7 +29,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       },
       {
         path: "/demo",
-        redirect: "/demo/element-plus",
+        redirect: "/demo/vxe-table",
         name: "Demo",
         meta: {
           title: "示例集合",

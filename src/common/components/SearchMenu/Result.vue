@@ -19,7 +19,7 @@ const scrollbarHeight = ref<number>(0)
 function itemStyle(item: RouteRecordRaw) {
   const flag = item.name === modelValue.value
   return {
-    background: flag ? "var(--el-color-primary)" : "",
+    background: flag ? "var(--color-primary)" : "",
     color: flag ? "#ffffff" : ""
   }
 }
@@ -33,7 +33,7 @@ function handleMouseenter(item: RouteRecordRaw) {
 
 /** 计算滚动可视区高度 */
 function getScrollbarHeight() {
-  // el-scrollbar max-height="40vh"
+  // scrollbar max-height="40vh"
   scrollbarHeight.value = Number((window.innerHeight * 0.4).toFixed(1))
 }
 
@@ -77,7 +77,7 @@ defineExpose({ getScrollTop })
       @mouseenter="handleMouseenter(item)"
     >
       <SvgIcon v-if="item.meta?.svgIcon" :name="item.meta.svgIcon" class="svg-icon" />
-      <component v-else-if="item.meta?.elIcon" :is="item.meta.elIcon" class="el-icon" />
+      <component v-else-if="item.meta?.elIcon" :is="item.meta.elIcon" class="icon" />
       <span class="result-item-title">
         {{ item.meta?.title }}
       </span>
@@ -95,14 +95,14 @@ defineExpose({ getScrollTop })
   height: 56px;
   padding: 0 15px;
   margin-bottom: 8px;
-  border: 1px solid var(--el-border-color);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   cursor: pointer;
   .svg-icon {
     min-width: 1em;
     font-size: 18px;
   }
-  .el-icon {
+  .icon {
     width: 1em;
     font-size: 18px;
   }

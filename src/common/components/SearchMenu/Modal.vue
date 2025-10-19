@@ -6,6 +6,7 @@ import { cloneDeep, debounce } from "lodash-es"
 import { usePermissionStore } from "@/pinia/stores/permission"
 import Footer from "./Footer.vue"
 import Result from "./Result.vue"
+import { message } from "ant-design-vue"
 
 /** 控制 modal 显隐 */
 const modelValue = defineModel<boolean>({ required: true })
@@ -68,7 +69,7 @@ function handleClose() {
 function scrollTo(index: number) {
   if (!resultRef.value) return
   const scrollTop = resultRef.value.getScrollTop(index)
-  // 手动控制 el-scrollbar 滚动条滚动，设置滚动条到顶部的距离
+  // 手动控制 scrollbar 滚动条滚动，设置滚动条到顶部的距离
   // scrollbarRef.value?.scrollTop(scrollTop)
   scrollbarRef.value?.scrollTo({ top: scrollTop })
 }
@@ -130,11 +131,11 @@ function handleEnter() {
   const name = activeRouteName.value
   const path = result.value.find(item => item.name === name)?.path
   if (path && isExternal(path)) return window.open(path, "_blank", "noopener, noreferrer")
-  if (!name) return ElMessage.warning("无法通过搜索进入该菜单，请为对应的路由设置唯一的 Name")
+  if (!name) return message.warning("无法通过搜索进入该菜单，请为对应的路由设置唯一的 Name")
   try {
     router.push({ name })
   } catch {
-    return ElMessage.warning("该菜单有必填的动态参数，无法通过搜索进入")
+    return message.warning("该菜单有必填的动态参数，无法通过搜索进入")
   }
   handleClose()
 }

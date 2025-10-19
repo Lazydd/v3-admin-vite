@@ -3,23 +3,41 @@
 :root {
   /* Body */
   --color-primary: #1677ff;
-  --v3-body-text-color: var(--el-text-color-primary);
-  --v3-body-bg-color: var(--el-bg-color-page);
+  --color-text-regular: #606266;
+  --color-border-lighter: #f0f0f0;
+
+  --color-bg: #ffffff;
+  --color-fill-light: #f5f7fa;
+  --color-mask: rgba(255, 255, 255, .9);
+  --color-fill-blank: #ffffff;
+
+  --color-dander: #ff4d4f;
+  --color-text-placeholder: rgba(0, 0, 0, 0.25);
+  --color-text-disabled: rgba(0, 0, 0, 0.04);
+  --color-border: #d9d9d9;
+
+  --color-text-primary: #303133;
+  --color-fill: #f0f2f5;
+  --color-shadow-lighter: 0px 0px 6px rgba(0, 0, 0, .12);
+  --color-shadow: 0px 12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
+  --color-text-secondary: #909399;
+  --color-menu-bg: var(--color-fill-blank);
+
+  --v3-body-text-color: var(--color-text-primary);
+  --v3-body-bg-color: var(--color-bg-page);
   /* Header 区域 = NavigationBar 组件 + TagsView 组件 */
-  --v3-header-height: calc(
-    var(--v3-navigationbar-height) + var(--v3-tagsview-height) + var(--v3-header-border-bottom-width)
-  );
-  --v3-header-bg-color: var(--el-bg-color);
-  --v3-header-box-shadow: var(--el-box-shadow-lighter);
+  --v3-header-height: calc(var(--v3-navigationbar-height) + var(--v3-tagsview-height) + var(--v3-header-border-bottom-width));
+  --v3-header-bg-color: var(--color-bg);
+  --v3-header-box-shadow: var(--color-shadow-lighter);
   --v3-header-border-bottom-width: 1px;
-  --v3-header-border-bottom: var(--v3-header-border-bottom-width) solid var(--el-fill-color);
+  --v3-header-border-bottom: var(--v3-header-border-bottom-width) solid var(--color-fill);
   /* NavigationBar 组件 */
   --v3-navigationbar-height: 50px;
-  --v3-navigationbar-text-color: var(--el-text-color-regular);
+  --v3-navigationbar-text-color: var(--color-text-regular);
   /* Sidebar 组件（左侧模式全部生效、顶部模式全部不生效、混合模式非颜色部分生效） */
   --v3-sidebar-width: 220px;
   --v3-sidebar-hide-width: 80px;
-  --v3-sidebar-border-right: 1px solid var(--el-fill-color);
+  --v3-sidebar-border-right: 1px solid var(--color-fill);
   --v3-sidebar-menu-item-height: 60px;
   --v3-sidebar-menu-tip-line-bg-color: var(--color-primary);
   --v3-sidebar-menu-bg-color: #001428;
@@ -28,22 +46,22 @@
   --v3-sidebar-menu-active-text-color: #ffffff;
   /* TagsView 组件 */
   --v3-tagsview-height: 34px;
-  --v3-tagsview-text-color: var(--el-text-color-regular);
+  --v3-tagsview-text-color: var(--color-text-regular);
   --v3-tagsview-tag-active-text-color: #ffffff;
-  --v3-tagsview-tag-bg-color: var(--el-bg-color);
+  --v3-tagsview-tag-bg-color: var(--color-bg);
   --v3-tagsview-tag-active-bg-color: var(--color-primary);
   --v3-tagsview-tag-border-radius: 2px;
-  --v3-tagsview-tag-border-color: var(--el-border-color-lighter);
+  --v3-tagsview-tag-border-color: var(--color-border-lighter);
   --v3-tagsview-tag-active-border-color: var(--color-primary);
   --v3-tagsview-tag-icon-hover-bg-color: #00000030;
   --v3-tagsview-tag-icon-hover-color: #ffffff;
-  --v3-tagsview-contextmenu-text-color: var(--el-text-color-regular);
-  --v3-tagsview-contextmenu-hover-text-color: var(--el-text-color-primary);
-  --v3-tagsview-contextmenu-bg-color: var(--el-bg-color-overlay);
-  --v3-tagsview-contextmenu-hover-bg-color: var(--el-fill-color);
-  --v3-tagsview-contextmenu-box-shadow: var(--el-box-shadow);
+  --v3-tagsview-contextmenu-text-color: var(--color-text-regular);
+  --v3-tagsview-contextmenu-hover-text-color: var(--color-text-primary);
+  --v3-tagsview-contextmenu-bg-color: var(--color-bg-overlay);
+  --v3-tagsview-contextmenu-hover-bg-color: var(--color-fill);
+  --v3-tagsview-contextmenu-box-shadow: var(--color-shadow);
   /* Hamburger 组件 */
-  --v3-hamburger-text-color: var(--el-text-color-primary);
+  --v3-hamburger-text-color: var(--color-text-primary);
   /* RightPanel 组件  */
   --v3-rightpanel-button-bg-color: #001428;
 }

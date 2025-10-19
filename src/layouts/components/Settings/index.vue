@@ -80,7 +80,7 @@ function resetLayoutsConfig() {
 
   .setting-item {
     font-size: 14px;
-    color: var(--el-text-color-regular);
+    color: var(--color-text-regular);
     padding: 5px 0;
     display: flex;
     justify-content: space-between;

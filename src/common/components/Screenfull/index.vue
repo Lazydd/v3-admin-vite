@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { message } from "ant-design-vue"
 import screenfull from "screenfull"
 
 interface Props {
@@ -31,7 +32,7 @@ const fullscreenSvgName = computed(() => (isFullscreen.value ? "fullscreen-exit"
 
 function handleFullscreenClick() {
   const dom = document.querySelector(element) || undefined
-  isEnabled ? screenfull.toggle(dom) : ElMessage.warning("您的浏览器无法工作")
+  isEnabled ? screenfull.toggle(dom) : message.warning("您的浏览器无法工作")
 }
 
 function handleFullscreenChange() {
