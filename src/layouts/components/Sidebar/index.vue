@@ -29,7 +29,7 @@ const settingsStore = useSettingsStore()
 
 // const activeMenu = computed(() => route.meta.activeMenu || route.path)
 
-const noHiddenRoutes = computed(() => route2menu(permissionStore.routes[0].children || []))
+const noHiddenRoutes = computed(() => route2menu((permissionStore.routes.filter(item => !item.meta?.hidden))[0].children || []))
 
 const isCollapse = computed(() => !appStore.sidebar.opened)
 
@@ -50,12 +50,13 @@ const tipLineWidth = computed(() => !isTop.value ? "2px" : "0px")
 const router = useRouter()
 
 function route2menu(arr: any[]) {
-  return arr.map((item) => {
+  return arr.filter(item => !item.meta?.hidden).map((item) => {
     const newItem = {
       key: item.name,
       label: item.meta?.title,
       icon: item.meta?.icon ? h(item.meta?.icon) : undefined,
-      children: null as any
+      meta: item.meta,
+      children: null as any,
     }
     if (item.children && item.children.length > 0) {
       newItem.children = route2menu(item.children)
@@ -79,11 +80,9 @@ watch(() => route.path, () => {
 <template>
   <div :class="{ 'has-logo': isLogo }">
     <Logo v-if="isLogo" :collapse="isCollapse" />
-    <a-menu
-      v-model:selected-keys="selectedKeys" :inline-collapsed="isCollapse && !isTop"
+    <a-menu v-model:selected-keys="selectedKeys" :inline-collapsed="isCollapse && !isTop"
       :theme="isLeft ? 'dark' : 'light'" :mode="isTop && !isMobile ? 'horizontal' : 'inline'" :items="noHiddenRoutes"
-      @click="handleClick"
-    />
+      @click="handleClick" />
   </div>
 </template>
 

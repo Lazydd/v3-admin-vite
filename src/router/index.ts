@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router"
-import { CustomerServiceOutlined, FileAddOutlined } from "@ant-design/icons-vue"
+import { CustomerServiceOutlined, FileAddOutlined, FrownOutlined } from "@ant-design/icons-vue"
 import { createRouter } from "vue-router"
 import { routerConfig } from "@/router/config"
 import { registerNavigationGuard } from "@/router/guard"
@@ -16,6 +16,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/",
     component: Layouts,
     redirect: "/dashboard",
+    name: 'Layouts',
     children: [
       {
         path: "dashboard",
@@ -28,7 +29,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
-        path: "/demo",
+        path: "demo",
         redirect: "/demo/vxe-table",
         name: "Demo",
         meta: {
@@ -95,7 +96,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: "/link",
+        path: "link",
         meta: {
           title: "文档链接",
           icon: FileAddOutlined
@@ -118,21 +119,7 @@ export const constantRoutes: RouteRecordRaw[] = [
             }
           }
         ]
-      }
-    ]
-  },
-  {
-    path: "/redirect",
-    name: "Redirect",
-    component: Layouts,
-    meta: {
-      hidden: true
-    },
-    children: [
-      {
-        path: ":path(.*)",
-        component: () => import("@/pages/redirect/index.vue")
-      }
+      },
     ]
   },
   {
@@ -158,23 +145,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       hidden: true
     }
   },
-  {
-    path: "/",
-    component: Layouts,
-    redirect: "/dashboard",
-    children: [
-      {
-        path: "dashboard",
-        component: () => import("@/pages/dashboard/index.vue"),
-        name: "Dashboard",
-        meta: {
-          title: "首页",
-          svgIcon: "dashboard",
-          affix: true
-        }
-      }
-    ]
-  }
+
 ]
 
 /**
@@ -183,41 +154,39 @@ export const constantRoutes: RouteRecordRaw[] = [
  * @description 必须带有唯一的 Name 属性
  */
 export const dynamicRoutes: RouteRecordRaw[] = [
-  // {
-  //   path: "/permission",
-  //   component: Layouts,
-  //   redirect: "/permission/page-level",
-  //   name: "Permission",
-  //   meta: {
-  //     title: "权限演示",
-  //     // icon: h(FrownOutlined),
-  //     // 可以在根路由中设置角色
-  //     roles: ["admin", "editor"],
-  //     alwaysShow: true
-  //   },
-  //   children: [
-  //     {
-  //       path: "page-level",
-  //       component: () => import("@/pages/demo/permission/page-level.vue"),
-  //       name: "PermissionPageLevel",
-  //       meta: {
-  //         title: "页面级",
-  //         // 或者在子路由中设置角色
-  //         roles: ["admin"]
-  //       }
-  //     },
-  //     {
-  //       path: "button-level",
-  //       component: () => import("@/pages/demo/permission/button-level.vue"),
-  //       name: "PermissionButtonLevel",
-  //       meta: {
-  //         title: "按钮级",
-  //         // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
-  //         roles: undefined
-  //       }
-  //     }
-  //   ]
-  // }
+  {
+    path: "permissions",
+    redirect: "/permissions/page-level",
+    name: "Permissions",
+    meta: {
+      title: "权限演示",
+      icon: FrownOutlined,
+      // 可以在根路由中设置角色
+      roles: ["admin", "editor"],
+    },
+    children: [
+      {
+        path: "page-level",
+        component: () => import("@/pages/demo/permission/page-level.vue"),
+        name: "PermissionPageLevel",
+        meta: {
+          title: "页面级",
+          // 或者在子路由中设置角色
+          roles: ["admin"]
+        }
+      },
+      {
+        path: "button-level",
+        component: () => import("@/pages/demo/permission/button-level.vue"),
+        name: "PermissionButtonLevel",
+        meta: {
+          title: "按钮级",
+          // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+          roles: undefined
+        }
+      }
+    ]
+  }
 ]
 
 /** 路由实例 */
