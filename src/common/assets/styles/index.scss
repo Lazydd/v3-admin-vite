@@ -71,8 +71,8 @@ div:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 20px;
-  background-color: var(--vxe-toolbar-background-color);
+  padding: 20px;
+  background-color: var(--vxe-ui-table-body-background-color);
 
   .left,
   .right {
@@ -85,6 +85,6 @@ div:focus {
 .pagination {
   display: flex;
   justify-content: flex-end;
-  padding-top: 20px;
-  background-color: var(--vxe-pager-background-color);
+  padding: 20px;
+  background-color: var(--vxe-ui-table-body-background-color);
 }

@@ -23,6 +23,8 @@
   --color-text-secondary: #909399;
   --color-menu-bg: var(--color-fill-blank);
 
+  --color-bg-page: #f2f3f5;
+
   --v3-body-text-color: var(--color-text-primary);
   --v3-body-bg-color: var(--color-bg-page);
   /* Header 区域 = NavigationBar 组件 + TagsView 组件 */
