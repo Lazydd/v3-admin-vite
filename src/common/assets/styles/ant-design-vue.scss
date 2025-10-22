@@ -1,3 +1,23 @@
 .ant-modal .ant-modal-body:has(.ant-form) {
   margin-top: 24px;
 }
+
+.ant-modal {
+  padding-bottom: unset;
+}
+
+.ant-breadcrumb a {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ant-breadcrumb li:last-child {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ant-breadcrumb a:hover {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ant-breadcrumb .ant-breadcrumb-separator {
+  color: rgba(255, 255, 255, 0.45);
+}

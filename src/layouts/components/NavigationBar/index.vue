@@ -51,10 +51,8 @@ function logout() {
 
 <template>
   <div class="navigation-bar">
-    <Hamburger
-      v-if="!isTop || isMobile" :is-active="appStore.sidebar.opened" class="hamburger"
-      @toggle-click="toggleSidebar"
-    />
+    <Hamburger v-if="!isTop || isMobile" :is-active="appStore.sidebar.opened" class="hamburger"
+      @toggle-click="toggleSidebar" />
     <Breadcrumb v-if="!isTop || isMobile" class="breadcrumb" />
     <Sidebar v-if="isTop && !isMobile" class="sidebar" />
     <div class="right-menu">
@@ -134,6 +132,7 @@ function logout() {
     .user {
       display: flex;
       align-items: center;
+      color: var(--color-bg);
 
       .ant-avatar {
         margin-right: 10px;

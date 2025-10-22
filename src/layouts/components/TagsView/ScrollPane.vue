@@ -144,6 +144,7 @@ listenerRouteChange(() => {
     height: 100%;
     font-size: 18px;
     cursor: pointer;
+    color: var(--color-bg);
 
     &.left {
       box-shadow: 5px 0 5px -6px var(--color-border-darker);

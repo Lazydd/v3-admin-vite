@@ -40,7 +40,7 @@ export function registerNavigationGuard(router: Router) {
       // 生成可访问的 Routes
       routerConfig.dynamic ? permissionStore.setRoutes(roles) : permissionStore.setAllRoutes()
       // 将 "有访问权限的动态路由" 添加到 Router 中
-      permissionStore.addRoutes.forEach(route => router.addRoute('Layouts', route))
+      permissionStore.addRoutes.forEach(route => router.addRoute("Layouts", route))
       // 设置 replace: true, 因此导航将不会留下历史记录
       return { ...to, replace: true }
     } catch (error) {

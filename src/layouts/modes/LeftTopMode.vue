@@ -49,7 +49,7 @@ $transition-time: 0.35s;
 .fixed-header {
   position: fixed;
   top: 0;
-  z-index: 1002;
+  z-index: 1000;
   width: 100%;
   display: flex;
   .logo {
@@ -73,13 +73,13 @@ $transition-time: 0.35s;
 }
 
 .sidebar-container {
-  background-color: var(--color-menu-bg);
+  background-color: var(--v3-sidebar-menu-bg-color);
   transition: width $transition-time;
   width: var(--v3-sidebar-width);
   height: 100%;
   position: fixed;
   left: 0;
-  z-index: 1001;
+  z-index: 999;
   overflow: hidden;
   border-right: var(--v3-sidebar-border-right);
   padding-top: var(--v3-navigationbar-height);
