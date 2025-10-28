@@ -1,8 +1,3 @@
-<div align="center">
-  <img alt="logo" width="120" height="120" src="./src/common/assets/images/layouts/logo.png">
-  <h1>V3 Admin Vite</h1>
-</div>
-
 ## 使用
 
 <details>
@@ -23,12 +18,6 @@
 <br>
 
 ```bash
-# 克隆项目
-git clone https://github.com/un-pany/v3-admin-vite.git
-
-# 进入项目目录
-cd v3-admin-vite
-
 # 安装依赖
 pnpm i
 

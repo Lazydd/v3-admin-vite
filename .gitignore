@@ -16,3 +16,10 @@ vite.config.*.timestamp*
 # Use the pnpm
 package-lock.json
 yarn.lock
+
+#rar
+*.rar
+*.zip
+*.tar
+*.gz
+*.7z
